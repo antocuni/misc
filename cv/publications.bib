@@ -1,0 +1,73 @@
+
+
+@inproceedings{PyPyTracing,
+	address = {Genova, Italy},
+	title = {Tracing the meta-level: {PyPy's} tracing {JIT} compiler},
+	isbn = {978-1-60558-541-3},
+	shorttitle = {Tracing the meta-level},
+	url = {http://portal.acm.org/citation.cfm?id=1565827},
+	doi = {10.1145/1565824.1565827},
+	abstract = {We attempt to apply the technique of Tracing {JIT} Compilers in the context of the {PyPy} project, i.e., to programs that are interpreters for some dynamic languages, including Python. Tracing {JIT} compilers can greatly speed up programs that spend most of their time in loops in which they take similar code paths. However, applying an unmodified tracing {JIT} to a program that is itself a bytecode interpreter results in very limited or no speedup. In this paper we show how to guide tracing {JIT} compilers to greatly improve the speed of bytecode interpreters. One crucial point is to unroll the bytecode dispatch loop, based on two kinds of hints provided by the implementer of the bytecode interpreter. We evaluate our technique by applying it to two {PyPy} interpreters: one is a small example, and the other one is the full Python interpreter.},
+	booktitle = {Proceedings of the 4th workshop on the Implementation, Compilation, Optimization of {Object-Oriented} Languages and Programming Systems},
+	publisher = {{ACM}},
+	author = {Carl Friedrich Bolz and Antonio Cuni and Maciej Fijałkowski and Armin Rigo},
+	year = {2009},
+	pages = {18--25}
+},
+
+@inproceedings{antocuni_2009,
+ author = {Cuni, Antonio and Ancona, Davide and Rigo, Armin},
+ title = {Faster than C\#: efficient implementation of dynamic languages on .NET},
+ booktitle = {Proceedings of the 4th workshop on the Implementation, Compilation, Optimization of Object-Oriented Languages and Programming Systems},
+ series = {ICOOOLPS '09},
+ year = {2009},
+ isbn = {978-1-60558-541-3},
+ location = {Genova, Italy},
+ pages = {26--33},
+ numpages = {8},
+ url = {http://doi.acm.org/10.1145/1565824.1565828},
+ doi = {http://doi.acm.org/10.1145/1565824.1565828},
+ acmid = {1565828},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+} 
+
+
+@phdthesis{antocuni_phd_2010,
+    type = {Ph.D. Thesis},
+    title = {High performance implementation of Python for CLI/.NET with JIT compiler generation for dynamic languages},
+    school = {{DISI}, Universit\'a di Genova},
+    author = {Antonio Cuni},
+    year = {2010},
+    note = {Technical Report {DISI-TH-2010-05}}
+},
+
+@inproceedings{ancona_rpython:dls_2007,
+    address = {Montreal, Quebec, Canada},
+    title = {{RPython:} A Step towards Reconciling Dynamically and Statically Typed {OO} Languages},
+    isbn = {978-1-59593-868-8},
+    url = {http://portal.acm.org/citation.cfm?id=1297091},
+    doi = {10.1145/1297081.1297091},
+    abstract = {Although the C-based interpreter of Python is reasonably fast, implementations on the {CLI} or the {JVM} platforms offers some advantages in terms of robustness and interoperability. Unfortunately, because the {CLI} and {JVM} are primarily designed to execute statically typed, object-oriented languages, most dynamic language implementations cannot use the native bytecodes for common operations like method calls and exception handling; as a result, they are not able to take full advantage of the power offered by the {CLI} and {JVM.}},
+    booktitle = {Proceedings of the 2007 Symposium on Dynamic Languages},
+    publisher = {{ACM}},
+    author = {Davide Ancona and Massimo Ancona and Antonio Cuni and Nicholas D. Matsakis},
+    year = {2007},
+    pages = {53--64}
+},
+
+
+@techreport{PyPyJIT09,
+	title = {Automatic generation of {JIT} compilers for dynamic
+                   languages in .{NET}},
+	institution = {{DISI}, University of Genova and Institut f\"ur Informatik, {Heinrich-Heine-Universit\"at D\"usseldorf}},
+	author = {Davide Ancona and Carl Friedrich Bolz and Antonio Cuni and Armin Rigo},
+	year = {2008},
+},
+
+@Article{bolz2011,
+ author = {Carl Friedrich Bolz and Antonio Cuni and Maciej Fijałkowski and Michael Leuschel and Samuele Pedroni Armin Rigo},
+ title = {Allocation Removal by Partial Evaluation in a Tracing JIT},
+ journal = {\emph{Submitted to} PEPM'11},
+ year = {2011},
+} 

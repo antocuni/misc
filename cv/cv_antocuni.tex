@@ -1,0 +1,208 @@
+\documentclass[11pt,a4paper]{moderncv}
+
+% moderncv themes
+\moderncvtheme[blue]{casual}  % optional argument are 'blue' (default), 'orange', 'red', 'green', 'grey' and 'roman' (for roman fonts, instead of sans serif fonts)
+%\moderncvtheme[green]{classic}                % idem
+
+% character encoding
+\usepackage[utf8]{inputenc}
+
+% adjust the page margins
+\usepackage[scale=0.8]{geometry}
+\recomputelengths % required when changes are made to page layout lengths
+
+% personal data
+\firstname{Antonio}
+\familyname{Cuni}
+\title{Curriculum Vitae} 
+\address{Via Perniciaro 70}{16010 Mele(GE) -- Italy}
+\mobile{+39-3455075567}
+\phone{+39-0106319262}
+\email{anto.cuni@gmail.com}
+\photo[64pt]{antocuni} % '64pt' is the height the picture must be resized to
+\quote{
+Considerate la vostra semenza: \\
+fatti non foste a viver come bruti, \\
+ma per seguir virtute e canoscenza. \\
+\emph{(Dante Alighieri)}
+}
+
+%\nopagenumbers{} % uncomment to suppress automatic page numbering for CVs longer than one page
+
+
+%----------------------------------------------------------------------------------
+%            content
+%----------------------------------------------------------------------------------
+\begin{document}
+\maketitle
+
+\section{Personal Information}
+\cvitem{Name}{Antonio Cuni}
+\cvitem{Email}{anto.cuni@gmail.com}
+\cvitem{Date of Birth}{May 13, 1982}
+\cvitem{Place of Birth}{Genova, Italy}
+\cvitem{Nationality}{Italian}
+
+\section{Summary}
+\cvitem{Introduction}{I have been designing and implementing software systems
+ since 1994, first as a hobby, then as a study subject and as a job.  I care
+  about building solid and extensible designs, and about writing good and
+  readable code. Being a developer, I like to write tools targeted to myself
+  and to the others developers, to make our life easier.}
+
+\cvitem{Technologies}{I am a primary a Python expert, but I have a strong
+  experience also with other technologies, including (but not limited to)
+  Linux, C, C++, SQL and database design, Web development in general, Java,
+  .NET and C\#, computer networking and security.  Moreover, since programming
+  and computers in general are still a pleasant hobby I like to learn about
+  new technologies, and I can usually do it very quickly.}
+
+\cvitem{PyPy and FLOSS}{I have been a core contributor to various aspects of
+  PyPy since 2006, including the development of the CLI/.NET and JVM backends,
+  the CLI JIT backend, the PyPy JIT compiler generator, the PyPy Python
+  interpreter and the testing infrastructure.  Recently, I leaded the
+  migration of the PyPy repository from Subversion to Mercurial.  Other than
+  PyPy, I started and have contributed to several FLOSS projects, as detailed
+  below.}
+
+\cvitem{Methodologies}{Thanks to my experience with PyPy, I have a strong and
+  positive experience w.r.t. distributed, agile, sprint-driven and test-driven
+  development, including good communication skills through IRC and emails, the
+  ability to work from home and to be self-motivated to accomplish my goals.}
+
+
+\section{Spoken languages}
+\cvlanguage{Italian}{Native speaker}{}
+\cvlanguage{English}{Fluent}{Cambridge FIRST Certificate in English}
+
+
+\section{Education}
+\cventry{2007 -- 2010}{Ph.D. in Computer Science}{DISI}{Università degli Studi
+  di Genova}{Italy}{}
+\cvitem{}{\emph{Dottorato di Ricerca in Informatica}}
+\cvitem{}{\textsc{Disseration}}
+\cvitem{Title}{\emph{High performance implementation of Python for CLI/.NET with JIT
+compiler generator for dynamic languages.}}
+\cvitem{Advisor}{Professor Davide Ancona}
+\cvitem{}{}
+
+\cventry{2004 -- 2006}{Master in Computer Science}{DISI}{Università degli Studi
+  di Genova}{Italy}{}
+\cvitem{}{\emph{Laurea Specialistica in Informatica}}
+\cvitem{Grade}{$110$ out of $110$ \emph{cum laude}}
+\cvitem{}{\textsc{Master Thesis}}
+\cvitem{Title}{\emph{Implementing Python on .NET}}
+\cvitem{Advisor}{Professor Massimo Ancona}
+\cvitem{}{}
+
+\cventry{2001 -- 2004}{Bachelor in Computer Science}{DISI}{Università degli Studi
+  di Genova}{Italy}{}
+\cvitem{}{\emph{Laurea in Informatica}}
+\cvitem{Grade}{$110$ out of $110$ \emph{cum laude}}
+\cvitem{}{}
+
+\cventry{1996 -- 2001}{High School Diploma}{Liceo Scientifico L. Lanfranconi}{Voltri}{Italy}{}
+\cvitem{Grade}{$100$ out of $100$}
+\cvitem{}{}
+
+\section{Career History}
+\cventry{2001 -- now}{Freelance software developer and architect}{My own
+  consultancy}{}{} {During the years, I have designed and implemented numerous
+  software systems of various sizes and complexity, involving several
+  different technologies, including (but not limited to): Linux, Python, C,
+  PostgreSQL, .NET, C\#, SQL Server.}
+
+\cventry{2010 -- now}{Researcher}{Heinrich-Heine-Universität}{Düsseldorf}{}{This
+position involved scientific research in the context of the PyPy project, in
+particular for the development of the Just In Time (JIT) Compiler generator.}
+
+\cventry{2007 -- 2010}{Ph.D Student}{DISI}{Università degli Studi di
+  Genova}{}{My Ph.D research was about the effective implementation of dynamic
+  languages for statically typed, object oriented virtual machine.  In
+  particular, I implemented the PyPy CLI JIT backend for the .NET virtual
+  machine.}
+
+\cventry{2006 -- 2007}{Researcher}{Heinrich-Heine-Universität}{Düsseldorf}{}{This
+  position involved scientific research in the context of the PyPy project, in
+  particular for bringing it towards maturity.}
+
+\clearpage
+\section{FLOSS activity}
+\cvitem{PyPy}{Most of my FLOSS contributions are in the context of the PyPy
+  project which I have been a core contributor to since 2006.  PyPy is both an
+  implementation of Python in Python and a framework for developing dynamic
+  languages, featuring among the others a JIT compiler
+  generator. \url{http://pypy.org/}}
+
+\subsection{Projects started/owned by me}
+\cvitem{pdb++}{drop-in replacement and an extension of the standard
+  \texttt{pdb} command line debugger found in the Python Standard Library.  It
+  offers several additional features, including syntax highlighting, full
+  screen debugging, and a better user interface.  Despite being a relatively
+  simple project, \texttt{pdb++} had an extremely good impact on the
+  development experience of me and of the other PyPy developers that started
+  using it.  Because of that, I recently released it as a standalone
+  project.}
+\cvitem{}{\url{http://bitbucket.org/antocuni/pdb/}}\vspace{0.2cm}
+
+\cvitem{fancycompleter}{Colorful and sane TAB completion of Python expressions
+  for both the interactive interpreter and the \texttt{pdb++} command
+  prompt.}
+\cvitem{}{\url{http://bitbucket.org/antocuni/fancycompleter/}}\vspace{0.2cm}
+
+\cvitem{wmctrl}{Python module to programmatically control windows inside X}
+\cvitem{}{\url{http://bitbucket.org/antocuni/wmctrl/}}\vspace{0.2cm}
+
+\cvitem{vcsdeploy}{Easily deploy updates of your application to your customers
+  through your favorite Version Control
+  System.}
+\cvitem{}{\url{http://bitbucket.org/antocuni/vcsdeploy}}\vspace{0.2cm}
+
+\cvitem{gcalendarlet}{A desklet to show Google Calendar events (for
+  \texttt{adesklets}).}
+\cvitem{}{\url{http://codespeak.net/svn/user/antocuni/gcalendarlet/}}\vspace{0.2cm}
+
+\cvitem{ln.vfat}{Tool to create simulated hard links in a FAT32 filesystem.}
+\cvitem{}{\url{http://codespeak.net/svn/user/antocuni/ln.vfat/}}\vspace{0.2cm}
+
+\cvitem{motion}{Motion detection tool.}
+\cvitem{}{\url{http://codespeak.net/svn/user/antocuni/motion/}}
+
+\subsection{Projects I contributed to}
+\cvitem{}{The following is a (partial and incomplete) list of FLOSS projects I
+  have contributed to (e.g., by sending patches and implementing new
+  features):}
+\cvlistitem{py.test: \url{http://pytest.org/}}
+\cvlistitem{pyrepl: \url{http://codespeak.net/pyrepl/}}
+\cvlistitem{virtualenv: \url{http://pypi.python.org/pypi/virtualenv/}}
+\cvlistitem{camelot: \url{http://www.python-camelot.com/}}
+
+
+\clearpage
+% Publications from a BibTeX file
+% \newcommand{\commentout}[1]{}
+% \commentout{
+% \cite{antocuni_2009} % else the publication section does not show up
+% }
+\nocite{*}
+\bibliographystyle{plain}
+\bibliography{publications}       % 'publications' is the name of a BibTeX file
+
+\section{Presentations and talks at international conferences}
+\cvitem{EuroPython '10, Birmingham}{Amaury Forgeot d'Arc, Antonio Cuni, Armin Rigo: \emph{PyPy 1.3: Status and News.}}
+\cvitem{Pycon Italia '10, Firenze}{Antonio Cuni, Armin Rigo: \emph{PyPy 1.2:
+  snakes never crawled so fast.} Keynote talk.}
+\cvitem{EuroPython '09, Birmingham}{Antonio Cuni, Samuele Pedroni: \emph{PyPy Status Talk.}}
+\cvitem{EuroPython '09, Birmingham}{Antonio Cuni, Samuele Pedroni: \emph{PyPy: becoming fast.}}
+\cvitem{ICOOOLPS '09, Genova}{Antonio Cuni: \emph{Faster than C\#: efficient implementation of dynamic languages on .NET.}}
+\cvitem{Pycon Italia '09, Firenze}{Antonio Cuni: \emph{PyPy's Python Interpreter status.}}
+\cvitem{Pycon UK '08, Birmingham}{Antonio Cuni, Maciej Fijalkowski: \emph{PyPy and The Art of Generating Virtual Machines.}}
+\cvitem{Pycon Italia '08, Firenze}{Antonio Cuni: \emph{PyPy and The Art of Generating Virtual Machines.}}
+\cvitem{DLS '07, Montreal}{Antonio Cuni: \emph{RPython: a Step Towards
+    Reconciling Dynamically and Statically Typed Object Oriented Languages.}}
+\cvitem{EuroPython '07, Vilnius}{Antonio Cuni, Maciej Fijalkowski: \emph{RPython: Need for speed (C and C\# considered harmful).}}
+\cvitem{Pycon Italia '07}{Antonio Cuni: \emph{PyPy 1.0 and beyond.}}
+
+
+\end{document}
+
