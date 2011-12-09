@@ -24,7 +24,14 @@ class LocalStatus (Structure):
 libdmtcphijack = CDLL(None)
 try:
     isEnabled         = libdmtcphijack.dmtcpIsEnabled();
+except AttributeError:
+    print 'Warning: DMTCP disabled'
+    isEnabled = False
+else:
     checkpoint        = libdmtcphijack.dmtcpCheckpoint;
+    checkpoint.restype = c_int
+    checkpoint.argtypes = []
+    
     localStatus       = libdmtcphijack.dmtcpGetLocalStatus;
     coordinatorStatus = libdmtcphijack.dmtcpGetCoordinatorStatus;
     delayCkptLock     = libdmtcphijack.dmtcpDelayCheckpointsLock;
@@ -35,8 +42,6 @@ try:
     coordinatorStatus.restype = POINTER(CoordinatorStatus)
     localStatus.restype = POINTER(LocalStatus)
 
-except AttributeError:
-    isEnabled = False;
 
 def numProcesses():
     if isEnabled:

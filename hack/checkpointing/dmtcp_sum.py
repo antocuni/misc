@@ -26,13 +26,14 @@ def main():
 
 def magic_run(fn):
     import dmtcp
+    assert dmtcp.isEnabled
+    
     i = 0
     while True:
         print 'run', i
         i += 1
         fn() # run the main program
-        #res = dmtcp.checkpoint()
-        res = 1
+        res = dmtcp.checkpoint()
         if res == dmtcp.AFTER_CHECKPOINT:
             return
 
