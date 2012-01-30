@@ -287,39 +287,54 @@ Template method (1)
 
 - subclasses can override it
 
-::
-    import mydb
-
-    class Person(object):
-        ...
-        def get_database_module(self):
-            "This is the template method!"
-            return mydb
-
-        def save(self):
-            if self.age < 18:
-                raise TooYoungException
-            db_module = self.get_database_module()
-            db_module.insert_into('Persons', [self.name, self.age])
-
 Template method (2)
 -------------------
 
-::
+|small|
+|example<| person.py |>|
 
-    def test_Person_save():
-        fake_db = FakeDb()
+.. sourcecode:: python
 
-        class MyPerson(Person):
-            def get_database_module(self):
-                "Here we override the template method!"
-                return fake_db
+  import mydb
 
-         p = MyPerson('pluto', 42)
-         p.save()
-         assert fake_db.persons == [
-             ('pluto', 42)
-             ]
+  class Person(object):
+    ...
+    def get_database_module(self):
+      "This is the template method!"
+      return mydb
+
+    def save(self):
+      if self.age < 18:
+        raise TooYoungException
+      db_module = self.get_database_module()
+      db_module.insert_into('Persons', 
+                           [self.name, self.age])
+
+|end_example|
+|end_small|
+
+Template method (3)
+-------------------
+
+|small|
+|example<| test_person.py |>|
+
+.. sourcecode:: python
+
+  def test_Person_save():
+    fake_db = FakeDb()
+
+    class MyPerson(Person):
+      def get_database_module(self):
+        "Here we override the template method!"
+        return fake_db
+
+     p = MyPerson('pluto', 42)
+     p.save()
+     assert fake_db.persons == [('pluto', 42)]
+
+|end_example|
+|end_small|
 
 
 Template "method" - Pythonic version
