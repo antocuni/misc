@@ -1,0 +1,8 @@
+\definecolor{rrblitbackground}{rgb}{0.0, 0.0, 0.0}
+
+\title[TDD explained]{Test Driven Development explained}
+\author[antocuni]
+{Antonio Cuni}
+
+\institute{anto.cuni@gmail.com}
+\date{}

@@ -1,8 +1,10 @@
+.. include:: beamerdefs.txt
+
 TDD explained
 =============
 
 Manual testing (1)
------------------
+------------------
 
 * Feature A
 
