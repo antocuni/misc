@@ -188,8 +188,12 @@ Writing tests
 Decoupling the components
 -------------------------
 
-::
-    import my_database
+|small|
+|example<| person.py |>|
+
+.. sourcecode:: python
+
+    import mydb
 
     class Person(object):
         ...
@@ -197,9 +201,13 @@ Decoupling the components
         def save(self):
             if self.age < 18:
                 raise TooYoungException
-            my_database.insert_into('Persons', [self.name, self.age])
+            mydb.insert_into('Persons', 
+                             [self.name, self.age])
 
-* ``Person`` and ``my_database`` are tightly coupled
+|end_example|
+|end_small|
+
+* ``Person`` and ``mydb`` are tightly coupled
 
 * how can we unit-test ``save``?
 
@@ -238,7 +246,7 @@ Mock objects
 Dependency injection
 --------------------
 
-* Decouple ``Person`` from ``my_database``
+* Decouple ``Person`` from ``mydb``
 
 * Goal: have a ``Person`` which uses our ``MyFakeDatabase``
 
@@ -255,13 +263,13 @@ Template method (1)
 - subclasses can override it
 
 ::
-    import my_database
+    import mydb
 
     class Person(object):
         ...
         def get_database_module(self):
             "This is the template method!"
-            return my_database
+            return mydb
 
         def save(self):
             if self.age < 18:
@@ -294,11 +302,11 @@ Template "method" - Pythonic version
 
 * In Python, we can override also attributes::
 
-    import my_database
+    import mydb
 
     class Person(object):
         ...
-        db_module = my_database  # template "attribute"
+        db_module = mydb  # template "attribute"
 
         def save(self):
             if self.age < 18:
@@ -319,7 +327,7 @@ Even more Pythonic
 
     class Person(object):
         ...
-        import my_database as db_module
+        import mydb as db_module
 
 
 Dependency injection (2)
@@ -361,7 +369,7 @@ Monkey patching (last resort)
 * if we cannot refactor it::
 
     # person.py
-    import my_database
+    import mydb
 
     class Person(object):
         ...
@@ -369,21 +377,21 @@ Monkey patching (last resort)
         def save(self):
             if self.age < 18:
                 raise TooYoungException
-            my_database.insert_into('Persons', [self.name, self.age])
+            mydb.insert_into('Persons', [self.name, self.age])
 
     # test_person.py
     import person
 
     def test_Person_save():
         fake_db = MyFakeDatabase()
-        old_my_database = person.my_database
+        old_mydb = person.mydb
         try:
-            person.my_database = fake_db
+            person.mydb = fake_db
             p = Person(...)
             ...
             assert ...
         finally:
-            person.my_database = old_my_database
+            person.mydb = old_mydb
 
 Monkey patching (py.test magic)
 --------------------------------
@@ -395,7 +403,7 @@ Monkey patching (py.test magic)
     def test_Person_save(monkeypatch):
         fake_db = MyFakeDatabase()
         # 
-        monkeypatch.setattr(person, 'my_database', fake_db)
+        monkeypatch.setattr(person, 'mydb', fake_db)
         # ^^^^^^
         p = Person(...)
         ...
