@@ -340,34 +340,80 @@ Template method (3)
 Template "method" - Pythonic version
 ------------------------------------
 
-* In Python, we can override also attributes::
+* In Python, we can override also attributes
 
-    import mydb
+|pause|
 
-    class Person(object):
-        ...
-        db_module = mydb  # template "attribute"
+|scriptsize|
+|column1|
+|example<| person.py |>|
 
-        def save(self):
-            if self.age < 18:
-                raise TooYoungException
-            self.db_module.insert_into('Persons', [self.name, self.age])
+.. sourcecode:: python
 
-     def test_Person_save():
-         class MyPerson(Person):
-             db_module = FakeDb()
-         ...
+  import mydb
+
+  class Person(object):
+    ...
+    # template "attribute"
+    db_module = mydb
+
+    def save(self):
+      if self.age < 18:
+        raise TooYoungException
+      self.db_module.insert_into(
+          'Persons', 
+          [self.name, self.age])
+
+
+|end_example|
+
+|pause|
+
+|column2|
+|example<| test_person.py |>|
+
+.. sourcecode:: python
+
+   def test_Person_save():
+     #
+     class MyPerson(Person):
+       ...
+       # override attribute
+       db_module = FakeDb()
+
+
+
+
+
+
+     ...
+
+|end_example|
+|end_columns|
+|end_scriptsize|
+
 
 Even more Pythonic
 -------------------
 
 * class declaration can contain any statement
 
-* ``import`` is a statement::
+* ``import`` is a statement
+
+|small|
+|example<| person.py |>|
+
+.. sourcecode:: python
 
     class Person(object):
         ...
+
         import mydb as db_module
+
+|end_example|
+|end_small|
+
+
 
 
 Dependency injection (2)
