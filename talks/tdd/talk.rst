@@ -219,10 +219,12 @@ Mock objects
 
 * does as little as possible
 
-::
+|scriptsize|
+|example<| test_person.py |>|
+
+.. sourcecode:: python
 
     class MyFakeDatabase(object):
-
         def __init__(self):
             self.persons = []
 
@@ -232,15 +234,15 @@ Mock objects
             else:
                 assert False, 'Unkown table name: %s' % tablename
 
-    def test_foobar():
+    def test_fakedb():
         db = MyFakeDatabase()
         db.insert_into('Persons', ('pippo', 29))
         db.insert_into('Persons', ('topolino', 32))
-        #
-        assert db.persons == [
-            ('pippo', 29),
-            ('topolino, 32),
-            ]
+        assert db.persons == [('pippo', 29),
+                              ('topolino, 32)]
+
+|end_example|
+|end_scriptsize|
 
 
 Dependency injection
