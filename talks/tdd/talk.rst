@@ -414,8 +414,6 @@ Even more Pythonic
 |end_small|
 
 
-
-
 Dependency injection (2)
 ------------------------
 
@@ -423,28 +421,52 @@ Dependency injection (2)
 
 * Don't need to create subclasses for the tests
 
-* Often, better design::
+* Often, better design
 
-    class Person(object):
-
-        def __init__(self, db_module, name, age):
-            self.db_module = db_module
-            self.name = name
-            self.age = age
-
-        def save(self):
-            if self.age < 18:
-                raise TooYoungException
-            self.db_module.insert_into('Persons', [self.name, self.age])
+Dependency injection (3)
+------------------------
 
 
-    def test_Person_save():
-        fake_db = FakeDb()
-         p = Person(fake_db, 'pluto', 42)
-         p.save()
-         assert fake_db.persons == [
-             ('pluto', 42)
-             ]
+|small|
+|example<| person.py |>|
+
+.. sourcecode:: python
+
+  class Person(object):
+
+    def __init__(self, db_module, name, age):
+      self.db_module = db_module
+      self.name = name
+      self.age = age
+
+    def save(self):
+      if self.age < 18:
+        raise TooYoungException
+      self.db_module.insert_into(
+              'Persons', [self.name, self.age])
+
+|end_example|
+|end_small|
+
+
+Dependency injection (4)
+------------------------
+
+
+|small|
+|example<| test_person.py |>|
+
+.. sourcecode:: python
+
+  def test_Person_save():
+    fake_db = FakeDb()
+    p = Person(fake_db, 'pluto', 42)
+    p.save()
+    assert fake_db.persons == [('pluto', 42)]
+
+|end_example|
+|end_small|
+
 
 
 Monkey patching (last resort)
