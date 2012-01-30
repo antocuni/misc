@@ -197,12 +197,12 @@ Decoupling the components
 
     class Person(object):
         ...
-        
-        def save(self):
-            if self.age < 18:
-                raise TooYoungException
-            mydb.insert_into('Persons', 
-                             [self.name, self.age])
+
+      def save(self):
+        if self.age < 18:
+          raise TooYoungException
+        mydb.insert_into('Persons', 
+                         [self.name, self.age])
 
 |end_example|
 |end_small|
@@ -212,37 +212,60 @@ Decoupling the components
 * how can we unit-test ``save``?
 
 
-Mock objects
-------------
+Mock objects (1)
+----------------
+
+* To be used "instead of"
 
 * Same interface as the "real" object
 
 * does as little as possible
 
-|scriptsize|
-|example<| test_person.py |>|
+* inspectable afterwards
+
+
+Mock objects (2)
+----------------
+
+|small|
+|example<| fakedb.py |>|
 
 .. sourcecode:: python
 
-    class MyFakeDatabase(object):
-        def __init__(self):
-            self.persons = []
+  class FakeDb(object):
 
-        def insert_into(self, tablename, values):
-            if tablename == 'Persons':
-                self.persons.append(values)
-            else:
-                assert False, 'Unkown table name: %s' % tablename
+    def __init__(self):
+      self.persons = []
 
-    def test_fakedb():
-        db = MyFakeDatabase()
-        db.insert_into('Persons', ('pippo', 29))
-        db.insert_into('Persons', ('topolino', 32))
-        assert db.persons == [('pippo', 29),
-                              ('topolino, 32)]
+    def insert_into(self, tablename, values):
+      if tablename == 'Persons':
+        self.persons.append(values)
+      else:
+        msg = 'Unknown table: %s' % tablename
+        assert False, msg
 
 |end_example|
-|end_scriptsize|
+|end_small|
+
+Mock objects (3)
+-----------------
+
+|small|
+|example<| test_fakedb.py |>|
+
+.. sourcecode:: python
+
+  def test_fakedb():
+    db = FakeDb()
+    db.insert_into('Persons', ('pippo', 29))
+    db.insert_into('Persons', ('topolino', 32))
+    assert db.persons == [
+        ('pippo', 29),
+        ('topolino, 32),
+    ]
+
+|end_example|
+|end_small|
 
 
 Dependency injection
@@ -250,7 +273,7 @@ Dependency injection
 
 * Decouple ``Person`` from ``mydb``
 
-* Goal: have a ``Person`` which uses our ``MyFakeDatabase``
+* Goal: have a ``Person`` which uses our ``FakeDb``
 
 * (manually editing the code is not an option :-)
 
@@ -285,7 +308,7 @@ Template method (2)
 ::
 
     def test_Person_save():
-        fake_db = MyFakeDatabase()
+        fake_db = FakeDb()
 
         class MyPerson(Person):
             def get_database_module(self):
@@ -317,7 +340,7 @@ Template "method" - Pythonic version
 
      def test_Person_save():
          class MyPerson(Person):
-             db_module = MyFakeDatabase()
+             db_module = FakeDb()
          ...
 
 Even more Pythonic
@@ -355,7 +378,7 @@ Dependency injection (2)
 
 
     def test_Person_save():
-        fake_db = MyFakeDatabase()
+        fake_db = FakeDb()
          p = Person(fake_db, 'pluto', 42)
          p.save()
          assert fake_db.persons == [
@@ -385,7 +408,7 @@ Monkey patching (last resort)
     import person
 
     def test_Person_save():
-        fake_db = MyFakeDatabase()
+        fake_db = FakeDb()
         old_mydb = person.mydb
         try:
             person.mydb = fake_db
@@ -403,7 +426,7 @@ Monkey patching (py.test magic)
     import person
 
     def test_Person_save(monkeypatch):
-        fake_db = MyFakeDatabase()
+        fake_db = FakeDb()
         # 
         monkeypatch.setattr(person, 'mydb', fake_db)
         # ^^^^^^
