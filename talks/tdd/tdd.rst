@@ -106,7 +106,7 @@ Test Driven Development
 Tests first
 ------------
 
-* Writing code no test is failing is **forbidden**
+* Writing code when no test is failing is **forbidden**
 
 * You should write just the code to make the test passing
 
@@ -138,15 +138,17 @@ TDD benefits
 
 * easily spot regressions
 
-* easily find who/when/why introduced a regression
+* easily find by who/when/why a regression was introduced
 
 * "Why the hell did I write this piece of code?"
 
   - look at the commit, and the corresponding test
 
-  - and/or
+* Remove the code, and see if/which tests fail
 
-  - remove the code, and see if/which tests fail
+  - "One of my most productive days was throwing away 1000 lines of code" (Ken Thompson)
+
+  - "Deleted code is debugged code" (Jeff Sickel)
 
 * **The power of refactoring**
 
@@ -262,7 +264,6 @@ Template method (1)
         def save(self):
             if self.age < 18:
                 raise TooYoungException
-            #
             db_module = self.get_database_module()
             db_module.insert_into('Persons', [self.name, self.age])
 
@@ -279,7 +280,7 @@ Template method (2)
                 "Here we override the template method!"
                 return fake_db
 
-         p = Person('pluto', 42)
+         p = MyPerson('pluto', 42)
          p.save()
          assert fake_db.persons == [
              ('pluto', 42)
@@ -300,7 +301,6 @@ Template "method" - Pythonic version
         def save(self):
             if self.age < 18:
                 raise TooYoungException
-            #
             self.db_module.insert_into('Persons', [self.name, self.age])
 
      def test_Person_save():
@@ -339,7 +339,6 @@ Dependency injection (2)
         def save(self):
             if self.age < 18:
                 raise TooYoungException
-            #
             self.db_module.insert_into('Persons', [self.name, self.age])
 
 
