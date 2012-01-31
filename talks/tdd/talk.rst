@@ -268,8 +268,8 @@ Mock objects (3)
 |end_small|
 
 
-Dependency injection
---------------------
+Decoupling components
+----------------------
 
 * Decouple ``Person`` from ``mydb``
 
@@ -414,7 +414,7 @@ Even more Pythonic
 |end_small|
 
 
-Dependency injection (2)
+Dependency injection (1)
 ------------------------
 
 * Pass the dependencies "from the above"
@@ -423,7 +423,7 @@ Dependency injection (2)
 
 * Often, better design
 
-Dependency injection (3)
+Dependency injection (2)
 ------------------------
 
 
@@ -449,7 +449,7 @@ Dependency injection (3)
 |end_small|
 
 
-Dependency injection (4)
+Dependency injection (3)
 ------------------------
 
 
@@ -469,50 +469,110 @@ Dependency injection (4)
 
 
 
-Monkey patching (last resort)
------------------------------
+Monkey patching (1)
+--------------------
+
+* (last resort)
 
 * Useful to test existing code
 
-* if we cannot refactor it::
+* If refactoring is not an option
 
-    # person.py
-    import mydb
+* Fragile
 
-    class Person(object):
-        ...
-        
-        def save(self):
-            if self.age < 18:
-                raise TooYoungException
-            mydb.insert_into('Persons', [self.name, self.age])
 
-    # test_person.py
-    import person
+Monkey patching (2)
+--------------------
 
-    def test_Person_save():
-        fake_db = FakeDb()
-        old_mydb = person.mydb
-        try:
-            person.mydb = fake_db
-            p = Person(...)
-            ...
-            assert ...
-        finally:
-            person.mydb = old_mydb
+|small|
+|example<| person.py |>|
+
+.. sourcecode:: python
+
+  import mydb
+
+  class Person(object):
+    ...    
+
+    def save(self):
+      if self.age < 18:
+        raise TooYoungException
+      mydb.insert_into('Persons', 
+                       [self.name, self.age])
+
+|end_example|
+|end_small|
+
+
+Monkey patching (3)
+--------------------
+
+|small|
+|example<| test_person.py |>|
+
+.. sourcecode:: python
+
+  import person
+
+  def test_Person_save():
+    fake_db = FakeDb()
+    person.mydb = fake_db
+    p = Person('pluto', 42)
+    p.save()
+    assert fake_db.persons == [('pluto', 42)]
+
+|end_example|
+|end_small|
+
+|pause|
+
+* What's wrong?
+
+Monkey patching (4)
+--------------------
+
+|small|
+|example<| test_person.py |>|
+
+.. sourcecode:: python
+
+  import person
+
+  def test_Person_save():
+    fake_db = FakeDb()
+    old_mydb = person.mydb
+    try:
+      person.mydb = fake_db
+      p = Person('pluto', 42)
+      p.save()
+      assert fake_db.persons == [('pluto', 42)]
+    finally:
+      person.mydb = old_mydb
+
+|end_example|
+|end_small|
+
 
 Monkey patching (py.test magic)
 --------------------------------
 
-::
+|small|
+|example<| test_person.py |>|
 
-    import person
+.. sourcecode:: python
 
-    def test_Person_save(monkeypatch):
-        fake_db = FakeDb()
-        # 
-        monkeypatch.setattr(person, 'mydb', fake_db)
-        # ^^^^^^
-        p = Person(...)
-        ...
-        assert ...
+  import person
+
+  def test_Person_save(monkeypatch):
+    fake_db = FakeDb()
+    monkeypatch.setattr(person, 'mydb', fake_db)
+    # ^^^^^^^^^^^^^^^^^
+    #
+    p = Person('pluto', 42)
+    p.save()
+    assert fake_db.persons == [('pluto', 42)]
+
+|end_example|
+|end_small|
+
+
