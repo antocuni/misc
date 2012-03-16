@@ -15,7 +15,7 @@ except ImportError:
 
 def myfunc(N):
     res = 0
-    for i in range(N):
+      for i in range(N):
         res += i
     return res
 
