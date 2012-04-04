@@ -1,0 +1,13 @@
+syntax: glob
+
+cv/cv_antocuni.aux
+cv/cv_antocuni.log
+cv/cv_antocuni.out
+cv/cv_antocuni.pdf
+talks/*/talk.aux
+talks/*/talk.latex
+talks/*/talk.log
+talks/*/talk.nav
+talks/*/talk.out
+talks/*/talk.snm
+talks/*/talk.toc
