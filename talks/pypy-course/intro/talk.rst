@@ -563,3 +563,92 @@ Contacts, Q/A
    :align: center
 
 
+Training session
+-----------------
+
+* Run your application under PyPy
+
+How to run PyPy
+----------------
+
+* ``pypy program.py``
+
+* That's it!
+
+  - (modulo details)
+
+Challenge
+---------
+
+* ``html_fibo.py``
+
+* HTML list of fibonacci numbers
+
+* (the most complicate ever)
+
+* run it on CPython
+
+* run it on PyPy
+
+* fix it!
+
+* http://pypy.org
+
+* http://antocuni.eu/misc/html_fibo.txt
+
+
+
+Refcounting vs generational GC (1)
+----------------------------------
+
+|scriptsize|
+|example<| |scriptsize| ``gc0.py`` |end_scriptsize| |>|
+
+.. sourcecode:: python
+
+   def foo():
+       f = file('/tmp/bar.txt', 'w')
+       f.write('hello world')
+
+   foo()
+   print file('/tmp/bar.txt').read()
+
+|end_example|
+
+|pause|
+|example<| |scriptsize| ``gc1.py`` |end_scriptsize| |>|
+
+.. sourcecode:: python
+
+   def foo():
+       f = file('/tmp/bar.txt', 'w')
+       f.write('hello world')
+       f.close() # <-------
+
+|end_example|
+
+|pause|
+|example<| |scriptsize| ``gc2.py`` |end_scriptsize| |>|
+
+.. sourcecode:: python
+
+   def foo():
+       with file('/tmp/bar.txt', 'w') as f:
+           f.write('hello world')
+
+|end_example|
+|end_scriptsize|
+
+
+Refcounting vs generational GC (2)
+----------------------------------
+
+* ``__del__``
+
+  - especially files or sockets
+
+  - don't leak file descriptors!
+
+* weakrefs
+
+* ``finally`` inside generators
