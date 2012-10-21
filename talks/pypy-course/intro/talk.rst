@@ -141,6 +141,39 @@ Speed
 
 
 
+Differences with CPython
+-------------------------
+
+* GC: not reference counting
+
+  - ``__del__``, ``weakref``, etc.
+
+|example<| refcounting |>|
+|scriptsize|
+
+.. sourcecode:: python
+
+    def foo():
+        f = open('/tmp/foo.txt')
+        f.write('hello')
+
+|end_scriptsize|
+|end_example|
+
+|pause|
+
+|example<| correct way |>|
+|scriptsize|
+
+.. sourcecode:: python
+
+    def foo():
+        with open('/tmp/foo.txt') as f:
+            f.write('hello')
+
+|end_scriptsize|
+|end_example|
+
 
 Real world use case (1)
 -----------------------
@@ -492,7 +525,6 @@ Pointless optimization techniques
 
 |end_scriptsize|
 
-
 Conclusion
 --------------
 
@@ -513,8 +545,6 @@ Conclusion
   * too much memory (sometimes)
 
 
-
-
 Contacts, Q/A
 --------------
 
@@ -531,3 +561,5 @@ Contacts, Q/A
 .. image:: question-mark.png
    :scale: 10%
    :align: center
+
+
