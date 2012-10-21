@@ -1,0 +1,8 @@
+\definecolor{rrblitbackground}{rgb}{0.0, 0.0, 0.0}
+
+\title[Introduction to PyPy]{Introduction to PyPy}
+\author[antocuni]
+{Antonio Cuni}
+
+\institute{BigDive 2012}
+\date{October 22 2012}
