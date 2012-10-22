@@ -51,7 +51,8 @@ Rendering (1)
 
 |example<| Mandelbrot |>|
 |small|
-::
+
+.. sourcecode:: python
 
     def render(request):
         w = int(request.GET.get('w', 320))
@@ -71,7 +72,8 @@ Rendering (2)
 
 |example<| Mandelbrot on PyPy |>|
 |small|
-::
+
+.. sourcecode:: python
 
     def pypy_render(request):
         w = int(request.GET.get('w', 320))
@@ -96,7 +98,8 @@ execnet setup
 
 |example<| At startup |>|
 |small|
-::
+
+.. sourcecode:: python
 
     import execnet
     mygroup = execnet.Group()
