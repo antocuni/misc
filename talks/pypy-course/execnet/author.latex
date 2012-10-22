@@ -1,0 +1,8 @@
+\definecolor{rrblitbackground}{rgb}{0.0, 0.0, 0.0}
+
+\title[PyPy execnet]{PyPy and CPython through execnet}
+\author[antocuni]
+{Antonio Cuni}
+
+\institute{Big Dive 2012
+\date{October 23, 2012}
