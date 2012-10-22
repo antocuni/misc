@@ -1,0 +1,1 @@
+PYTHONPATH=/home/antocuni/pypy/misc/django/:/home/antocuni/pypy/misc/execnet/::/home/antocuni/WebFormKit:/home/antocuni/pypy/trunk/:/home/antocuni/pypy/user/antocuni/:/home/antocuni/pypy/user/antocuni/hack/:/home/antocuni/pypy/misc/pg8000/:/home/antocuni/pypy/misc/casalino-carta/:/home/antocuni/site-packages python manage.py runserver
