@@ -681,7 +681,7 @@ Challenge
 
 * http://pypy.org
 
-* http://antocuni.eu/misc/html_fibo.txt
+* |small| http://antocuni.eu/misc/html_fibo.txt |end_small|
 
 
 
