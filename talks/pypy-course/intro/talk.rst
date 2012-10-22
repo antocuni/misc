@@ -98,6 +98,15 @@ PyPy 1.9: current status
 
   - runs (big part of) **PyOpenSSL** and **lxml**
 
+  - numpy (more on that later)
+
+Speed
+------
+
+.. image:: pypy-vs-cpython.png
+   :scale: 40%
+   :align: center
+
 
 
 PyPy features
@@ -131,16 +140,6 @@ PyPy features
 
 * compact instances (as using ``__slots__``)
 
-
-Speed
-------
-
-.. image:: pypy-vs-cpython.png
-   :scale: 40%
-   :align: center
-
-
-
 Differences with CPython
 -------------------------
 
@@ -173,6 +172,94 @@ Differences with CPython
 
 |end_scriptsize|
 |end_example|
+
+Obscure details that people rely on
+------------------------------------
+
+"There is No Feature Obscure Enough for people not to rely on"
+
+|pause|
+
+- Non-string keys in __dict__ of types
+
+- Exact naming of a list comprehension variable
+
+- Relying on untested and undocumented private stuff
+
+- Exact message matching in exception catching
+  code
+
+- Refcounting details
+
+
+``import numpypy`` (1)
+-----------------------
+
+|scriptsize|
+
+* http://buildbot.pypy.org/numpy-status/latest.html
+
+|end_scriptsize|
+
+.. image:: numpypy.png
+   :scale: 30%
+   :align: center
+
+``import numpypy`` (2)
+-----------------------
+
+* in-progress, funded by donations
+
+* JIT-friendly
+
+* almost as fast as the corresponding C code
+
+* be happy with pure Python loops
+
+* the bad news: scipy not there (yet)
+
+numpy quick benchmarks
+------------------------
+
+|example<| |small| numpybench.py |end_small| |>|
+|scriptsize|
+
+.. sourcecode:: python
+
+    def c_loop(a):
+        return numpy.sum(a)
+
+    def pyloop(a):
+        sum = 0
+        for i in range(len(a)):
+            sum += a[i]
+        return sum
+
+
+|end_scriptsize|
+|end_example|
+
+|pause|
+
+|example<| |small| numpybench2.py |end_small| |>|
+|scriptsize|
+
+.. sourcecode:: python
+
+    def c_loop(a, b, c):
+        return numpy.add(a, numpy.multiply(b, c))
+
+    def pyloop(a, b, c):
+        N = len(a)
+        assert N == len(b) == len(c)
+        res = numpy.zeros(N)
+        for i in range(N):
+            res[i] = a[i] + b[i]*c[i]
+        return res
+
+|end_scriptsize|
+|end_example|
+
 
 
 Real world use case (1)
