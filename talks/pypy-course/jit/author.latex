@@ -1,0 +1,8 @@
+\definecolor{rrblitbackground}{rgb}{0.0, 0.0, 0.0}
+
+\title[PyPy JIT under the hood]{PyPy JIT under the hood}
+\author[antocuni]
+{Antonio Cuni}
+
+\institute{Big Dive 2012}
+\date{October 23, 2012}

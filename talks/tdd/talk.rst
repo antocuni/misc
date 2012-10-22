@@ -576,3 +576,89 @@ Monkey patching (py.test magic)
 |end_small|
 
 
+Interactive session
+--------------------
+
+- Fibonacci
+
+
+Running example: Custom Tags
+--------------------------------
+
+- scada provides a set of builtin tags
+
+- let the user to define his own, in python
+
+- once defined, they can be used in place of builtin ones
+
+
+Entities involved
+------------------
+
+- the scada subsystem
+
+- the user
+
+- the db
+
+- the tags
+
+- the web server
+
+- think about boundaries
+
+Design the API
+----------------
+
+- from the "consumer" point of view
+
+    * no difference between builtin and custom tags
+
+    * "tell me your value"
+
+    * common interface
+
+- from the "producer" point of view
+
+    * huge difference between the twos
+
+    * who creates the tags?
+
+    * who loads from/stores to the db?
+
+Class hierarchy
+-----------------
+
+interactive
+
+
+BuiltinTag
+-----------
+
+- need to ask scada about the value
+
+- interactive
+
+Environment
+-------------
+
+- design the API
+
+- how to inject?
+
+- mock object for testing
+
+- interactive
+
+|pause|
+
+- test the tests!
+
+
+CustomTag
+------------
+
+- interactive
+
+- python magic :-)
+

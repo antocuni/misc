@@ -13,9 +13,13 @@ class Point(object):
 
 def main():
     p = Point(0.0, 0.0)
-    while p.x < 2000.0:
+    while p.x < 2000000.0:
         p = p + Point(1.0, 0.5)
     print p.x, p.y
 
-main()
+import time
 
+x = time.clock()
+main()
+y = time.clock()
+print y-x, 'seconds'

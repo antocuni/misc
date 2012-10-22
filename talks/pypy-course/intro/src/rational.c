@@ -3,7 +3,7 @@
 int main()
 {
     float px = 0.0, py = 0.0;
-    while (px < 2000.0) {
+    while (px < 2000000.0) {
         px += 1.0;
         py += 0.5;
     }

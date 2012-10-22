@@ -4,6 +4,21 @@
 Introduction to PyPy
 ================================
 
+About me
+---------
+
+- PyPy core dev
+
+- PyPy py3k tech leader
+
+- ``pdb++``, ``fancycompleter``, ...
+
+- Consultant, trainer
+
+- http://antocuni.eu
+
+- twitter: @antocuni
+
 What is PyPy?
 -------------
 
