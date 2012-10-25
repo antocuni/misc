@@ -6,9 +6,9 @@ from django.conf.urls.defaults import *
 
 urlpatterns = patterns('',
     # Example:
-    (r'^render$', 'pypy_demo.mandelbrot.views.render'),
-    (r'^pypy_render$', 'pypy_demo.mandelbrot.views.pypy_render'),
-    (r'^empty$', 'pypy_demo.mandelbrot.views.empty'),       
+    (r'^render$', 'mandelbrot_demo.mandelbrot.views.render'),
+    (r'^pypy_render$', 'mandelbrot_demo.mandelbrot.views.pypy_render'),
+    (r'^empty$', 'mandelbrot_demo.mandelbrot.views.empty'),       
 
     # Uncomment the admin/doc line below and add 'django.contrib.admindocs' 
     # to INSTALLED_APPS to enable admin documentation:

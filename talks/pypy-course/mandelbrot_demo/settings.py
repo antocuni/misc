@@ -1,4 +1,4 @@
-# Django settings for pypy_demo project.
+# Django settings for mandelbrot_demo project.
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -63,7 +63,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
 )
 
-ROOT_URLCONF = 'pypy_demo.urls'
+ROOT_URLCONF = 'mandelbrot_demo.urls'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -76,5 +76,5 @@ INSTALLED_APPS = (
     ## 'django.contrib.contenttypes',
     ## 'django.contrib.sessions',
     ## 'django.contrib.sites',
-    'pypy_demo.mandelbrot',
+    'mandelbrot_demo.mandelbrot',
 )
