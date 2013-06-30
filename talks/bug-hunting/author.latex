@@ -1,0 +1,8 @@
+\definecolor{rrblitbackground}{rgb}{0.0, 0.0, 0.0}
+
+\title[Bug Hunting]{Bug Hunting For Dummies}
+\author[antocuni]
+{Antonio Cuni}
+
+\institute{EuroPython 2013}
+\date{July 2 2012}
