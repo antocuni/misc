@@ -19,10 +19,10 @@ About me
 About this talk
 ====================
 
-If debugging is the process of removing bugs, then programming must
-be the process of putting them in.
+    If debugging is the process of removing bugs, then programming must
+    be the process of putting them in.
 
-(Dykstra's Observation)
+    (Dykstra's Observation)
 
 |pause|
 
@@ -38,7 +38,7 @@ be the process of putting them in.
 
 - The mindset of the bug hunter
 
-- Collections of stories and techniques I use and used in the past
+- Examples of techniques I use
 
 
 What is a bug?
@@ -46,13 +46,15 @@ What is a bug?
 
 - (Un)expected behaviour of a program
 
-- Crash
+  * Crash
 
-- Incorrect result
+  * Incorrect result
+  
+  * Memory leak
 
-- Memory leak
+  * Performance problem
 
-- Performance problem
+|pause|
 
 - Categories
 
@@ -70,9 +72,11 @@ Scenario
 
 - Lot of code, lots of people, several years of development
 
-- Complex relations in the source code
+- Complex relations in the source code (e.g. PyPy :))
 
-- VPBR (Very Precise Bug Report): "the program does not work!"
+- VPBR (Very Precise Bug Report)
+
+  * `"the program does not work!"`
 
 |pause|
 
@@ -92,7 +96,9 @@ Simple approach
 
   - try to understand the mess of the source code
 
-  - put a breakpoint and observe what happens
+  - (optional: inspect in a debugger)
+
+  - fix&try
 
 |pause|
 
@@ -100,9 +106,30 @@ Simple approach
 
 * Little chance of success if the bug is complex
 
+  - The world stop to make any sense
+
+Mindset
+=======
+
+- There MUST be an explanation
+
+- No divinity or god is against you
+
+- Your assumptions might be wrong
+
+- The compiler/library/O.S. is probably correct |pause|
+
+  * Unless it's not :)
+
+
+
 
 General approach
 =================
+
+|small|
+
+(not necessarily in this order)
 
 0. (from the Zen of Python): Refuse the temptation to guess
 
@@ -118,7 +145,10 @@ General approach
 
 6. Fix it
 
+|end_small|
+
 - Goal: Understand, **then** fix
+
 
 
 1. Reproduce the bug
@@ -192,19 +222,110 @@ General approach
 
 - Write a test!
 
+4. Spot the problem
+========================
+
+- Bigger reduction --> easier hunting
+
+- If it's still too complex
+
+  - step by step in a debugger
+
+  - print/logging/tracing
+
+5-6. Understand & fix
+=====================
+
+- Refuse the temptation to guess
+
+- Fix only **after** you understood the problem
+
+- **Write a test**
+
+  * Almost for free once you have reduced&automated
+
+  * Fail before, pass after the fix
+
+
+Real world example
+===================
+
+- PyPy ``_fastjson`` decoder
+
+- "Large" document crashes in the middle
+
+- "Simple&fast" approach
+
+  * Locate the error message
+
+  * Look around, put a pdb, try to guess
+
+  * No way
+
+|pause|
+
+- "General approach"
+
+  * Reduce the data!
+
+  * Write a test
+
+  * (fix)
+
+Useful tools
+============
+
+- Debuggers:
+
+  - ``pdb``, ``pdb++``, ``pudb``, ``ipdb``
+
+  - IDE debuggers (PyCharm, Wing IDE, etc.)
+
+- Breakpoints
+
+  - ``import pdb;pdb.set_trace()``
+
+
+Post-mortem debugging
+======================
+
+- ``py.test --pdb test_myprogram.py``
+
+- ``python -m pdb myprogram.py``
+
+|small|
+|example<| Automatic post-mortem pdb |>|
+
+.. sourcecode:: python
+
+    import sys
+    import traceback
+    import pdb
+
+    def start_pdb(type, value, tb):
+        traceback.print_exception(type, value, tb)
+        print
+        pdb.pm()
+
+    sys.excepthook = start_pdb
+
+|end_example|
+|end_small|
 
 Techniques
 ==========
 
-- Refuse the temptation to guess (from the Zen of Python)
-
-- Make it reproducible. Automatize
-
-- Reduce the test case at minimum
-
-- Write a test!
-
 - print vs pdb
+
+- import pdb;pdb.xpm()
+
+- patch open/sys.stdout
+
+- __setattr__
+
+- non-deterministic
+
+- heisenbugs
 
 
 
