@@ -139,11 +139,11 @@ General approach
 
 3. Find the smallest test case which fails. Write a test.
 
-4. Spot the problem
+4. Spot the problem. 
 
 5. Understand the problem
 
-6. Fix it
+6. **Make predictions**, run, repeat. Fixed.
 
 |end_small|
 
@@ -240,7 +240,17 @@ General approach
 
 - Fix only **after** you understood the problem
 
-- **Write a test**
+- Make predictions (a.k.a: "the scientific method", G. Galilei, 1638 ca)
+
+  * Make a change
+
+  * Have precise expectations on the output
+
+  * Verify
+
+- The mind adapt its view of the world to what you observe.
+
+- **Write a test** (if you didn't yet)
 
   * Almost for free once you have reduced&automated
 
@@ -272,6 +282,87 @@ Real world example
 
   * (fix)
 
+
+Excursus: benefits of TDD (1)
+===============================
+
+- Write a (failing) test before implementing a feature
+
+- Write a (failing) test before fixing a bug
+
+- Check you didn't introduce any other bug: rerun the entire testsuite
+
+- Commit!
+
+- Regression: "something stopped working"
+
+- A test fails, but used to pass
+
+Excursus: benefits of TDD(2)
+==============================
+
+1. ``hg bisect --reset; hg bisect --bad``
+
+2. ``hg up -r some-rev-where-the-test-passed``
+
+3. check whether the test passes
+
+  * ``hg bisect --good`` OR
+
+  * ``hg bisect --bad``
+
+4. goto 3
+
+|pause|
+
+* OR: ``hg bisect -c py.test test_myfile.py -k my_failing_test``
+
+
+Don't assume the assumptions
+=============================
+
+  When you have eliminated the impossible, whatever remains, however
+  improbable, must be the truth (Sherlock Holmes, Sir Arthur Conan Doyle, "The
+  Sign of Four")
+
+* Be prepared to question everything
+
+* Challenge your assumptions
+
+  - put a ``print`` to make sure a function is called
+
+  - put ``assert`` everywhere
+
+  - write passing tests to check that the world behave as you expect
+
+  - make sure you are editing the right file!
+
+The "XXX" technique
+====================
+
+- Your fix some code, but the system ignores you
+
+- Put an ``XXX`` in the code and check that it breaks
+
+- .pyc files
+
+- the module is imported from somewhere else:
+
+  * a different checkout
+
+  * site-packages/ vs your development dir
+
+- two functions with the same name
+
+- ``print __file__``
+
+- ``print mymodule.__file__``
+
+- ``print myfunction.__module__``
+
+
+
+
 Useful tools
 ============
 
@@ -279,9 +370,11 @@ Useful tools
 
   - ``pdb``, ``pdb++``, ``pudb``, ``ipdb``
 
+  - ``pip install pdbpp`` (unix-only, sorry)
+
   - IDE debuggers (PyCharm, Wing IDE, etc.)
 
-- Breakpoints
+- Breakpoints and step-by-step execution
 
   - ``import pdb;pdb.set_trace()``
 
@@ -312,16 +405,271 @@ Post-mortem debugging
 |end_example|
 |end_small|
 
-Techniques
+Eaten exceptions (1)
+=====================
+
+- Exceptions caugth before they reach you
+
+- No chance to enter post-mortem
+
+  * because there is no mortem :)
+
+- E.g.: logging
+
+|scriptsize|
+|example<| |small| somewhere deep in the code... |end_small| |>|
+
+.. sourcecode:: python
+
+   try:
+       do_something()
+   except Exception, e:
+       logfile.write('An error occoured: %s' % e)
+
+|end_example|
+|end_scriptsize|
+
+Eaten exceptions (2)
+=====================
+
+|scriptsize|
+|example<| |small| somewhere deep in the code... |end_small| |>|
+
+.. sourcecode:: python
+   
+   try:
+       do_something()
+   except Exception, e:
+       # this will open a pdb at the point where 
+       # the exceptions was originally raised
+       pdb.post_mortem(sys.exc_info()[2])
+       logfile.write('An error occoured: %s' % e)
+
+|end_example|
+
+|pause|
+|example<| |small| with pdb++ |end_small| |>|
+
+.. sourcecode:: python
+   
+   try:
+       do_something()
+   except Exception, e:
+       # equivalent to the above
+       pdb.xpm()
+       logfile.write('An error occoured: %s' % e)
+
+|end_example|
+|end_scriptsize|
+
+
+
+Logging/tracing vs manual step-by-step
+======================================
+
+- sometimes step-by-step is not always applicable
+
+  * |small| http://antocuni.eu/misc/tracker.txt |end_small|
+
+|column1|
+
+|scriptsize|
+|example<| |small| Trace calls |end_small| |>|
+
+.. sourcecode:: python
+
+   call = CallTracker()
+
+   @call.track
+   def foo(x, y):
+       return bar(x) + baz(y)
+
+   @call.track
+   def bar(a):
+       call.log('a ==', a)
+       return a*2
+
+   @call.track
+   def baz(b):
+       return b*3
+
+   print foo(10, 20)
+
+|end_example|
+|end_scriptsize|
+
+|pause|
+|column2|
+
+|tiny|
+|example<| |small| Trace calls |end_small| |>|
+
+.. sourcecode:: python
+
+    class CallTracker(object):
+        def __init__(self):     
+            self.level = 0
+
+        def log(self, *args):
+            print('   ' * self.level, *args)
+
+        def exit(self, f):
+            self.level -= 1
+
+        def enter(self, f):
+            self.log('entering', f)
+            self.level += 1
+
+        def track(self, fn):
+            def newfn(*args, **kwds):
+                self.enter(fn.__name__)
+                try:
+                    return fn(*args, **kwds)
+                finally:
+                    self.exit(fn.__name__)
+            return newfn
+
+|end_example|
+|end_tiny|
+
+|end_columns|
+
+Conditional breakpoints
+========================
+
+.. sourcecode:: python
+
+  if something:
+     import pdb;pdb.set_trace()
+
+* During the debugging you are allowed to cheat:
+
+  - E.g.: check whether a string containing "foobar" is in a list
+
+  - ``if "foobar" in repr(myobj)``
+
+* Combine it with logging
+
+* E.g.: stop only just before the crash
+
+* _fastjson demo
+
+
+Exploit Python dynamicity (1)
+=============================
+
+|scriptsize|
+|example<| |small| pdb on setattr |end_small| |>|
+
+.. sourcecode:: python
+
+   class Foo(object):
+
+       def __setattr__(self, name, value):
+           if name == 'x' and value == 42:
+               import pdb;pdb.set_trace()
+           object.__setattr__(self, name, value)
+
+   f = Foo()
+   f.y = 123
+   f.x = 456
+   f.x = 42 # PDB!
+
+
+|end_example|
+|end_scriptsize|
+
+Exploit Python dynamicity (2)
+=============================
+
+|scriptsize|
+|example<| |small| using pdb++ |end_small| |>|
+
+.. sourcecode:: python
+
+   import pdb # this is actually pdb++
+
+   def is_42(obj, value):
+       return value == 42
+
+   @pdb.break_on_setattr('x', condition=is_42)
+   class Foo(object):
+       pass
+
+   f = Foo()
+   f.y = 123
+   f.x = 456
+   f.x = 42 # PDB!
+
+|end_example|
+|end_scriptsize|
+
+
+Exploit Python dynamicity (3)
+=============================
+
+* Real world example
+
+* Where the hell is the Django code to locate a template?!?
+
+|scriptsize|
+|example<| |small| break on file open |end_small| |>|
+
+.. sourcecode:: python
+
+    import __builtin__
+
+    original_open = open
+    def myopen(filename, *args):
+        if 'passwd' in filename:
+            import pdb;pdb.set_trace()
+        return original_open(filename, *args)
+
+    __builtin__.open = myopen
+    __builtin__.file = myopen
+
+    print open(__file__).read()
+    print open('/etc/passwd').read()
+
+|end_example|
+|end_scriptsize|
+
+Exploit Python dynamicity (4)
+=============================
+
+* Useful when you don't know/find who prints a certain message
+
+|scriptsize|
+|example<| |small| break on stdout |end_small| |>|
+
+.. sourcecode:: python
+
+    import sys
+
+    class MyStdout(object):
+        def __init__(self, out):
+            self.out = out
+
+        def write(self, s):
+            if 'i == 100' in s:
+                import pdb;pdb.set_trace()
+            self.out.write(s)
+
+    sys.stdout = MyStdout(sys.stdout)
+
+    for i in range(200):
+        print 'i == %d' % i
+
+|end_example|
+|end_scriptsize|
+
+
+
+
+
+
+TODO
 ==========
-
-- print vs pdb
-
-- import pdb;pdb.xpm()
-
-- patch open/sys.stdout
-
-- __setattr__
 
 - non-deterministic
 

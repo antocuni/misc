@@ -28,6 +28,14 @@
 
    }
 
+.. |tiny| raw:: latex
+
+   {\tiny
+
+.. |end_tiny| raw:: latex
+
+   }
+
 .. |strike<| raw:: latex
 
    \sout{
