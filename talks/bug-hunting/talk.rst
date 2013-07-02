@@ -74,6 +74,8 @@ Scenario
 
 - Complex relations in the source code (e.g. PyPy :))
 
+|pause|
+
 - VPBR (Very Precise Bug Report)
 
   * `"the program does not work!"`
@@ -85,8 +87,8 @@ Scenario
 - There will always be a level of complexity which you can't understand
   immediately.
 
-Simple approach
-================
+Naïve approach
+======================
 
 * Guess where is the problem
 
@@ -127,9 +129,10 @@ Mindset
 General approach
 =================
 
+|scriptsize| (not necessarily in this order) |end_scriptsize|
+
 |small|
 
-(not necessarily in this order)
 
 0. (from the Zen of Python): Refuse the temptation to guess
 
@@ -137,7 +140,7 @@ General approach
 
 2. Automatize the run (you are going to run it **many** times)
 
-3. Find the smallest test case which fails. Write a test.
+3. Find the smallest test case which fails
 
 4. Spot the problem. 
 
@@ -145,9 +148,9 @@ General approach
 
 6. **Make predictions**, run, repeat. Fixed.
 
-|end_small|
-
 - Goal: Understand, **then** fix
+
+|end_small|
 
 
 
@@ -159,6 +162,8 @@ General approach
 - Try to reproduce it locally
 
   * "but it works on my machine!"
+
+- Write a test
 
 |pause|
 
@@ -173,6 +178,8 @@ General approach
   * Workload, RAM size
 
   * Network latency/bandwith
+
+  * Localization
 
   * Phase of the moon
 
@@ -196,6 +203,7 @@ General approach
 
 - At worst: mouse automation (autopy, pywinauto)
 
+- Write a test
 
 3. Reduction
 =============
@@ -220,7 +228,7 @@ General approach
 
   * If it stops failing, the problem is there 
 
-- Write a test!
+- Write a test
 
 4. Spot the problem
 ========================
@@ -233,6 +241,8 @@ General approach
 
   - print/logging/tracing
 
+  - strace, ltrace
+
 5-6. Understand & fix
 =====================
 
@@ -240,7 +250,9 @@ General approach
 
 - Fix only **after** you understood the problem
 
-- Make predictions (a.k.a: "the scientific method", G. Galilei, 1638 ca)
+- Make predictions
+
+  * (a.k.a: "the scientific method", G. Galilei, 1638 ca)
 
   * Make a change
 
@@ -256,6 +268,45 @@ General approach
 
   * Fail before, pass after the fix
 
+Excursus: benefits of TDD (1)
+===============================
+
+- Write a (failing) test before implementing a feature
+
+- Write a (failing) test before fixing a bug
+
+- Check you didn't introduce any other bug: rerun the entire testsuite
+
+- Commit!
+
+- Regression: "something stopped working"
+
+- A test fails, but used to pass
+
+Excursus: benefits of TDD(2)
+==============================
+
+|small|
+
+1. ``hg bisect --reset; hg bisect --bad``
+
+2. ``hg up -r some-rev-where-the-test-passed``
+
+3. check whether the test passes
+
+  * ``hg bisect --good`` OR
+
+  * ``hg bisect --bad``
+
+4. goto 3
+
+|pause|
+
+* OR: ``hg bisect -c py.test test_myfile.py -k my_failing_test``
+
+* ``git bisect`` works similarly
+
+|end_small|
 
 Real world example
 ===================
@@ -282,40 +333,6 @@ Real world example
 
   * (fix)
 
-
-Excursus: benefits of TDD (1)
-===============================
-
-- Write a (failing) test before implementing a feature
-
-- Write a (failing) test before fixing a bug
-
-- Check you didn't introduce any other bug: rerun the entire testsuite
-
-- Commit!
-
-- Regression: "something stopped working"
-
-- A test fails, but used to pass
-
-Excursus: benefits of TDD(2)
-==============================
-
-1. ``hg bisect --reset; hg bisect --bad``
-
-2. ``hg up -r some-rev-where-the-test-passed``
-
-3. check whether the test passes
-
-  * ``hg bisect --good`` OR
-
-  * ``hg bisect --bad``
-
-4. goto 3
-
-|pause|
-
-* OR: ``hg bisect -c py.test test_myfile.py -k my_failing_test``
 
 
 Don't assume the assumptions
@@ -386,8 +403,10 @@ Post-mortem debugging
 
 - ``python -m pdb myprogram.py``
 
-|small|
-|example<| Automatic post-mortem pdb |>|
+|pause|
+
+|scriptsize|
+|example<| |small| Automatic post-mortem pdb |end_small| |>|
 
 .. sourcecode:: python
 
@@ -403,7 +422,7 @@ Post-mortem debugging
     sys.excepthook = start_pdb
 
 |end_example|
-|end_small|
+|end_scriptsize|
 
 Eaten exceptions (1)
 =====================
@@ -463,13 +482,31 @@ Eaten exceptions (2)
 |end_scriptsize|
 
 
+Eaten exceptions (3)
+=====================
+
+- Don't eat exceptions unless you really have to
+
+|small|
+|alert<| |small| NEVER do it |end_small| |>|
+
+.. sourcecode:: python
+   
+   try:
+       do_something()
+   except:
+       pass
+
+|end_alert|
+|end_small|
+
 
 Logging/tracing vs manual step-by-step
 ======================================
 
 - sometimes step-by-step is not always applicable
 
-  * |small| http://antocuni.eu/misc/tracker.txt |end_small|
+  * |scriptsize| http://antocuni.eu/misc/tracker.txt |end_scriptsize|
 
 |column1|
 
@@ -533,6 +570,8 @@ Logging/tracing vs manual step-by-step
 |end_tiny|
 
 |end_columns|
+
+
 
 Conditional breakpoints
 ========================
@@ -664,19 +703,72 @@ Exploit Python dynamicity (4)
 |end_scriptsize|
 
 
+Non-deterministic bugs (1)
+===========================
 
+- The bug does not show always
 
+- Might depend on the phase of the moon
 
+- In C: unitialized memory, freed pointers, etc.
 
-TODO
-==========
+- Much less common in Python
 
-- non-deterministic
+|pause|
 
-- heisenbugs
+- Dictionary order
 
+- C extensions
 
+- ctypes, cffi & co.
 
+- Threading, race conditions
+
+Non-deterministic bugs (2)
+==========================
+
+- You cannot be sure to have solved the problem
+
+- Key: make it deterministic
+
+  * Run it N times (remember automation?)
+
+  * Use a larger input
+
+  * Try to change the conditions (e.g. free memory, CPU load)
+
+  * Put random sleeps/busy loops in the threads
+
+  * Allocate N big objects at the start
+
+- Exploit low level tools
+
+  * gdb watch
+
+  * valgrind
+
+Heisenbugs
+===========
+
+- The program crashes
+
+- As soon as you modify for inspection, it works 
+
+- Yes, some divinity might be against you
+
+|pause|
+
+- Leaving it modified is NOT the solution! :)
+
+- Inspect without modify
+
+  * use print/logging instead of pdb.set_trace()
+
+  * inspect from gdb
+
+  * strace, ltrace
+
+- No general solution, sorry :-(
 
 Contacts, Q&A
 ==============
