@@ -438,9 +438,6 @@ Out of line guards (2)
 
 * Used a bit "everywhere"
 
-* Credits to Mark Shannon
-
-  - for the name :-)
 
 Guards
 -------
