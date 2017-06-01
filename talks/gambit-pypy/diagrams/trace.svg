@@ -19,7 +19,7 @@
    sodipodi:docname="trace.svg"><metadata
      id="metadata8"><rdf:RDF><cc:Work
          rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
-           rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><defs
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title /></cc:Work></rdf:RDF></metadata><defs
      id="defs6"><clipPath
        clipPathUnits="userSpaceOnUse"
        id="clipPath16"><path
@@ -56,12 +56,12 @@
      fit-margin-right="0"
      fit-margin-bottom="0"
      inkscape:zoom="1.4142136"
-     inkscape:cx="226.81817"
+     inkscape:cx="154.33973"
      inkscape:cy="186.75804"
      inkscape:window-x="65"
      inkscape:window-y="24"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer3" /><g
+     inkscape:current-layer="layer6" /><g
      inkscape:groupmode="layer"
      id="layer1"
      inkscape:label="content"><text
@@ -334,10 +334,10 @@
          transform="matrix(1,0,0,-1,453.1,678)"
          style="font-variant:normal;font-weight:normal;font-size:10px;font-family:'DejaVu Sans';-inkscape-font-specification:DejaVuSans;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
          id="text184"><tspan
-           x="0 6.3899999 12.78 19.17"
-           y="0"
            sodipodi:role="line"
-           id="tspan186">2100</tspan></text>
+           id="tspan186"
+           x="0"
+           y="0">2050</tspan></text>
 </g><g
        transform="matrix(1.25,0,0,-1.25,-70.8125,955.1875)"
        style="display:inline"
@@ -521,10 +521,10 @@
          transform="matrix(1,0,0,-1,453.1,575.7)"
          style="font-variant:normal;font-weight:normal;font-size:10px;font-family:'DejaVu Sans';-inkscape-font-specification:DejaVuSans;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
          id="text270"><tspan
-           x="0 6.3899999 12.78 19.17"
-           y="0"
            sodipodi:role="line"
-           id="tspan272">2100</tspan></text>
+           id="tspan272"
+           x="0"
+           y="0">2050</tspan></text>
 </g><g
        transform="matrix(1.25,0,0,-1.25,-70.8125,955.1875)"
        style="display:inline"
@@ -598,10 +598,10 @@
          transform="matrix(1,0,0,-1,453.1,524.6)"
          style="font-variant:normal;font-weight:normal;font-size:10px;font-family:'DejaVu Sans';-inkscape-font-specification:DejaVuSans;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
          id="text316"><tspan
-           x="0 6.3899999 12.78 19.17"
-           y="0"
            sodipodi:role="line"
-           id="tspan318">2142</tspan></text>
+           id="tspan318"
+           x="0"
+           y="0">2092</tspan></text>
 </g><g
        transform="matrix(1.25,0,0,-1.25,-70.8125,955.1875)"
        style="display:inline"
