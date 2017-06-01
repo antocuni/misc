@@ -1,0 +1,8 @@
+\definecolor{rrblitbackground}{rgb}{0.0, 0.0, 0.0}
+
+\title[PyPy JIT internals]{PyPy JIT internals \\ (for dummies)}
+\author[antocuni]
+{Antonio Cuni}
+
+\institute{Gambit Research}
+\date{June 2nd, 2017}
