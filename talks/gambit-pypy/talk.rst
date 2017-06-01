@@ -86,15 +86,15 @@ Tracing Example (2)
      0 LOAD_FAST          "i"
      3 LOAD_CONST         2
      6 BINARY_MODULO    
-     7 POP_JUMP_IF_FALSE ->18
-
+     7 POP_JUMP_IF_FALSE  18
     10 LOAD_FAST          "x"
     13 LOAD_CONST         42
     16 BINARY_ADD
     17 RETURN_VALUE
-
     18 LOAD_FAST          "x"
-    21 RETURN_VALUE
+    21 LOAD_CONST         1
+    24 BINARY_SUBTRACT
+    25 RETURN_VALUE
 
 |end_example|
 
@@ -130,32 +130,7 @@ Tracing example (3)
    :scale: 80%
 
 
-Trace trees (1)
----------------
-
-|scriptsize|
-|example<| |small| tracetree.java |end_small| |>|
-
-.. sourcecode:: java
-
-    public static void trace_trees() {
-      int a = 0;
-      int i = 0;
-      int N = 100;
-
-      while(i < N) {
-        if (i%2 == 0)
-            a++;
-        else
-            a*=2;
-        i++;
-      }
-    }
-
-|end_example|
-|end_scriptsize|
-
-Trace trees (2)
+Trace trees
 ---------------
 
 .. animage:: diagrams/tracetree-p*.pdf
