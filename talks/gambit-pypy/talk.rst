@@ -138,6 +138,27 @@ Trace trees
    :scale: 34%
 
 
+Relevant Gambit example
+------------------------
+
+|scriptsize|
+|example<| |small| optimiser_slave.py |end_small| |>|
+
+.. sourcecode:: python
+
+    def run(self):
+        ...
+        if self.pypy_jit_count == PYPY_DISABLE_JIT_AFTER_N_PROBLEMS:
+            import pypyjit
+            pypyjit.set_param("off")
+            pypyjit.set_param(trace_eagerness=sys.maxint)
+        self.pypy_jit_count += 1
+        ...
+
+|end_example|
+|end_scriptsize|
+
+
 Part 2
 ------
 
