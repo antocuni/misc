@@ -54,30 +54,21 @@ Tracing Example (1)
 
 
 |scriptsize|
-|example<| |small| java |end_small| |>|
+|example<| |small| tracing.py |end_small| |>|
 
-.. sourcecode:: java
+.. sourcecode:: python
 
-    interface Operation {
-        int DoSomething(int x);
-    }
-    class IncrOrDecr implements Operation {
-        public int DoSomething(int x) { 
-            if (x < 0) return x-1;
-            else       return x+1;
-        }
-    }
-    class tracing {
-        public static void main(String argv[]) {
-            int N = 100;
-            int i = 0;
-            Operation op = new IncrOrDecr();
-            while (i < N) {
-                i = op.DoSomething(i);
-            }
-            System.out.println(i);
-        }
-    }
+   def fn(x, i):
+        if i % 2 == 0:
+            return x + 1
+        else:
+            return x
+
+    def main():
+        x = 0
+        for i in range(2000):
+            x = fn(x, i)
+        print x
 
 |end_example|
 |end_scriptsize|
@@ -88,53 +79,43 @@ Tracing Example (2)
 
 |scriptsize|
 |column1|
-|example<| |small| Java bytecode |end_small| |>|
+|example<| |small| dis.dis(fn) |end_small| |>|
 
-.. sourcecode:: java
+.. sourcecode:: python
 
-  class IncrOrDecr {
-    ...
-    public DoSomething(I)I
-      ILOAD 1
-      IFGE LABEL_0
-      ILOAD 1
-      ICONST_1
-      ISUB
-      IRETURN
-     LABEL_0
-      ILOAD 1
-      ICONST_1
-      IADD
-      IRETURN
-  }
+     0 LOAD_FAST          "i"
+     3 LOAD_CONST         2
+     6 BINARY_MODULO    
+     7 POP_JUMP_IF_FALSE ->18
+
+    10 LOAD_FAST          "x"
+    13 LOAD_CONST         42
+    16 BINARY_ADD
+    17 RETURN_VALUE
+
+    18 LOAD_FAST          "x"
+    21 RETURN_VALUE
 
 |end_example|
 
 |pause|
 
 |column2|
-|example<| |small| Java bytecode |end_small| |>|
+|example<| |small| dis.dis(main) |end_small| |>|
 
-.. sourcecode:: java
+.. sourcecode:: python
 
-  class tracing {
     ...
-    public static main(
-       [Ljava/lang/String;)V
-      ...
-     LABEL_0
-      ILOAD 2
-      ILOAD 1
-      IF_ICMPGE LABEL_1
-      ALOAD 3
-      ILOAD 2
-      INVOKEINTERFACE 
-        Operation.DoSomething (I)I
-      ISTORE 2
-      GOTO LABEL_0
-     LABEL_1
-      ...
-  }
+    19 FOR_ITER      21 (to 43)
+    22 STORE_FAST     "i"
+
+    25 LOAD_GLOBAL    "fn"
+    28 LOAD_FAST      "x"
+    31 LOAD_FAST      "i"
+    34 CALL_FUNCTION  2
+    37 STORE_FAST     "x"
+    40 JUMP_ABSOLUTE 19
+    ...
 
 |end_example|
 |end_columns|
