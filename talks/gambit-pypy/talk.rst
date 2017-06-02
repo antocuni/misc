@@ -796,6 +796,35 @@ Example: even better API :)
 
 * http://vmprof.com/#/58b9696e-0d22-48a8-90eb-af9c51f5dc5c/traces
 
+  
+Example: black magic
+---------------------
+
+|scriptsize|
+|example<| |small| decode1_magic.py |end_small| |>|
+
+.. sourcecode:: python
+
+    ...
+    
+    def magic_dict(**kwargs):
+        import __pypy__
+        res = __pypy__.newdict('module')
+        res.update(kwargs)
+        return res
+
+    Point = Message('Point', magic_dict(
+        x = Field('i', 0),
+        y = Field('i', 4),
+        color = Field('h', 8),
+        ))
+
+    ...
+
+|end_example|
+|end_scriptsize|
+
+
 
 Conclusion
 -----------
