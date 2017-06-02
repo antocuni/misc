@@ -171,6 +171,90 @@ PyPy trace example
    :scale: 40%
 
 
+Intermezzo
+-----------
+
+Looking at traces
+
+  
+How to look at traces (1)
+-------------------------
+
+* ``pypytools.jitview``
+
+* useful for a quick look
+
+* works best for few lines of code
+
+|scriptsize|
+|example<| |small| jitview_example.py |end_small| |>|
+
+.. sourcecode:: python
+
+    from pypytools.jitview import JitView
+
+    def main():
+        x = 0
+        for i in range(2000):
+            with JitView():
+                x += i
+        print x 
+
+|end_example|
+|end_scriptsize|
+
+
+How to look at traces (2)
+-------------------------
+
+* ``PYPYLOG``
+
+* ``PYPYLOG=:myfile.log pypy tracing.py``
+
+* look for ``jit-log-opt-*`` sections
+
+
+How to look at traces (3)
+-------------------------
+
+* ``vmprof``
+
+|scriptsize|
+
+.. sourcecode:: bash
+  
+    $ pypy -m vmprof --jitlog -o myfile.vmprof tracing.py
+    $ pypy -m vmprof.upload myfile.vmprof
+
+    http://vmprof.com/#/18330299-15fd-4a55-9465-9efd85fb66b1/traces
+
+|end_scriptsize|
+
+
+More about vmprof
+-----------------
+
+* Sampling profiler, low overhead (~5-10%)
+
+* Works on CPython and PyPy
+
+* JIT-friendly
+
+  - it does not screw up relative performances
+
+  - do **NOT** use cProfile
+
+* Profiling of native code (e.g. numpy functions)
+
+* Memory profiler
+
+  - however the GUI seems not to work right now?
+
+* Lots of interest
+
+  - JetBrains sponsored native profiling and wrote their own GUI
+
+           
 PyPy optimizer
 ---------------
 
@@ -429,84 +513,6 @@ Out of line guards (2)
 
 * Used a bit "everywhere"
 
-Intermezzo
------------
-
-Looking at traces
-
-  
-How to look at traces (1)
--------------------------
-
-* ``pypytools.jitview``
-
-* useful for a quick look
-
-* works best for few lines of code
-
-|scriptsize|
-|example<| |small| jitview_example.py |end_small| |>|
-
-.. sourcecode:: python
-
-    from pypytools.jitview import JitView
-
-    def main():
-        x = 0
-        for i in range(2000):
-            with JitView():
-                x += i
-        print x 
-
-|end_example|
-|end_scriptsize|
-
-
-How to look at traces (2)
--------------------------
-
-* ``PYPYLOG``
-
-* ``PYPYLOG=:myfile.log pypy tracing.py``
-
-* look for ``jit-log-opt-*`` sections
-
-
-How to look at traces (3)
--------------------------
-
-* ``vmprof``
-
-|scriptsize|
-
-.. sourcecode:: bash
-  
-    $ pypy -m vmprof --jitlog -o myfile.vmprof tracing.py
-    $ pypy -m vmprof.upload myfile.vmprof
-
-    http://vmprof.com/#/18330299-15fd-4a55-9465-9efd85fb66b1/traces
-
-|end_scriptsize|
-
-
-More about vmprof
------------------
-
-* Sampling profiler, low overhead (~5-10%)
-
-* Works on CPython and PyPy
-
-* JIT-friendly: it does not screw up relative performances
-
-* Profiling of native code (e.g. numpy functions)
-
-* Memory profiler
-
-  - however the GUI seems not to work right now?
-
-* Lots of interest
-
-  - JetBrains sponsored native profiling and wrote their own GUI
 
 
 Promotion
@@ -601,7 +607,7 @@ Specialization trade-offs
 Abstractions for free
 ----------------------
 
-* Think virtual
+* *Think virtual*
 
 * Temporary objects are optimized away
 
