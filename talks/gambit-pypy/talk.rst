@@ -456,6 +456,76 @@ Promotion
 
 - example: function code objects, ...
 
+
+How to look at traces (1)
+-------------------------
+
+* ``pypytools.jitview``
+
+* useful for a quick look
+
+* works best for few lines of code
+
+|scriptsize|
+|example<| |small| jitview_example.py |end_small| |>|
+
+.. sourcecode:: python
+
+    from pypytools.jitview import JitView
+
+    def main():
+        x = 0
+        for i in range(2000):
+            with JitView():
+                x += i
+        print x 
+
+|end_example|
+|end_scriptsize|
+
+
+How to look at traces (2)
+-------------------------
+
+* ``PYPYLOG``
+
+* ``PYPYLOG=:myfile.log pypy tracing.py``
+
+* look for ``jit-log-opt-*`` sections
+
+
+How to look at traces (3)
+-------------------------
+
+* ``vmprof``
+
+* ``pypy -m vmprof --jitlog -o myfile.vmprof tracing.py``
+
+* ``pypy -m vmprof.upload myfile.vmprof``
+
+* http://vmprof.com/#/18330299-15fd-4a55-9465-9efd85fb66b1/traces
+
+
+More about vmprof
+-----------------
+
+* Sampling profiler, low overhead (~5-10%)
+
+* Works on CPython and PyPy
+
+* JIT-friendly: it does not screw up relative performances
+
+* Profiling of native code (e.g. numpy functions)
+
+* Memory profiler
+
+  - however the GUI seems not to work right now?
+
+* Lots of interest
+
+  - JetBrains sponsored native profiling and wrote their own GUI
+
+  
 Conclusion
 -----------
 
