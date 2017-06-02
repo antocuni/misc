@@ -10,13 +10,10 @@ About this talk
 
 * Overview of tracing JITs
 
-* The PyPy JIT generator
+* PyPy JIT
 
+* Abstractions for free
 
-Part 1
-------
-
-**Overview of tracing JITs**
 
 
 Tracing JITs
@@ -50,8 +47,7 @@ Tracing JIT phases
 Tracing Example (1)
 --------------------
 
-.. we use java instead of RPython to avoid confusion with applevel Python
-
+* **Simplified**
 
 |scriptsize|
 |example<| |small| tracing.py |end_small| |>|
@@ -159,12 +155,7 @@ Relevant Gambit example
 |end_scriptsize|
 
 
-Part 2
-------
-
-**The PyPy JIT generator**
-
-General architecture
+PyPy JIT
 ---------------------
 
 .. animage:: diagrams/architecture-p*.pdf
