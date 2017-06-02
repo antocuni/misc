@@ -628,6 +628,8 @@ Example
 
 - Messages: strings of bytes
 
+  * sounds familiar? :)
+
 |small|
 |example<| |small| Point |end_small| |>|
 
