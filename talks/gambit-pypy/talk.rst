@@ -429,6 +429,12 @@ Out of line guards (2)
 
 * Used a bit "everywhere"
 
+Intermezzo
+-----------
+
+Looking at traces
+
+  
 How to look at traces (1)
 -------------------------
 
@@ -501,21 +507,6 @@ More about vmprof
 * Lots of interest
 
   - JetBrains sponsored native profiling and wrote their own GUI
-
-
-
-Guards
--------
-
-- guard_true
-
-- guard_false
-
-- guard_class
-
-- guard_no_overflow
-
-- **guard_value**
 
 
 Promotion
