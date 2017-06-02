@@ -429,34 +429,6 @@ Out of line guards (2)
 
 * Used a bit "everywhere"
 
-
-Guards
--------
-
-- guard_true
-
-- guard_false
-
-- guard_class
-
-- guard_no_overflow
-
-- **guard_value**
-
-Promotion
----------
-
-- guard_value
-
-- specialize code
-
-- make sure not to **overspecialize**
-
-- example: type of objects
-
-- example: function code objects, ...
-
-
 How to look at traces (1)
 -------------------------
 
@@ -506,6 +478,108 @@ How to look at traces (3)
 * http://vmprof.com/#/18330299-15fd-4a55-9465-9efd85fb66b1/traces
 
 
+Guards
+-------
+
+- guard_true
+
+- guard_false
+
+- guard_class
+
+- guard_no_overflow
+
+- **guard_value**
+
+
+Promotion
+---------
+
+- guard_value
+
+- specialize code
+
+- make sure not to **overspecialize**
+
+- example: type of objects
+
+- example: function code objects, ...
+
+
+Specialization (1)
+-------------------
+
+- ``obj.foo()``
+
+- which code is executed? (SIMPLIFIED)
+
+  * lookup ``foo`` in obj.__dict__
+
+  * lookup ``foo`` in obj.__class__
+
+  * lookup ``foo`` in obj.__bases__[0], etc.
+
+  * finally, execute ``foo``
+
+- Precompute the lookup
+
+
+Specialization (2)
+--------------------
+
+- pretend and assume that ``obj.__class__`` IS constant
+
+  * "promotion"
+
+  * guard_value
+
+- now we can directly jump to ``foo`` code
+
+  * ...unless ``foo`` is in ``obj.__dict__``: GUARD!
+
+  * ...unless ``foo.__class__.__dict__`` changed: GUARD!
+
+- Too many guard failures?
+
+  * Compile some more assembler!
+
+- guards are cheap
+
+  * out-of-line guards even more
+
+
+Specialization (3)
+---------------------
+
+- who decides what to promote/specialize for?
+
+  * we, the PyPy devs :)
+
+  * heuristics
+
+- instance attributes are never promoted
+
+- class attributes are promoted by default (with some exceptions)
+
+- module attributes (i.e., globals) as well
+
+- bytecode constants
+
+
+Specialization trade-offs
+--------------------------
+
+- Too much specialization
+
+  * guards fails often
+
+  * explosion of assembler
+
+- Not enough specialization
+
+  * inefficient code
+
+
 More about vmprof
 -----------------
 
@@ -525,7 +599,195 @@ More about vmprof
 
   - JetBrains sponsored native profiling and wrote their own GUI
 
-  
+
+Abstractions for free
+----------------------
+
+* Think virtual
+
+* Temporary objects are optimized away
+
+* Better APIs with no performance penalty
+
+* (ab)use class and module dictionaries to drive specialization
+
+
+Example
+--------
+
+- Real world example
+
+- Decoding binary messages
+
+- Messages: strings of bytes
+
+|small|
+|example<| |small| Point |end_small| |>|
+
+.. sourcecode:: C
+
+    struct Point {
+        int x;
+        int y;
+        short color;
+    }
+
+|end_example|
+|end_small|
+
+
+
+Example: low-level solution
+----------------------------
+
+|scriptsize|
+|example<| |small| decode0.py |end_small| |>|
+
+.. sourcecode:: python
+
+    P1 = '\x0c\x00\x00\x00"\x00\x00\x00\x07\x00\x00\x00'
+    P2 = '\x15\x00\x00\x00+\x00\x00\x00\x08\x00\x00\x00'
+    
+    PLIST = [P1, P2] * 2000
+    
+    def read_x(p):
+        return struct.unpack_from('i', p, 0)[0]
+    
+    def main():
+        res = 0
+        for p in PLIST:
+            x = read_x(p)
+            res += x
+        print res
+
+|end_example|
+|end_scriptsize|
+
+
+Example: better API
+---------------------
+
+|scriptsize|
+|example<| |small| decode1.py |end_small| |>|
+
+.. sourcecode:: python
+
+    class Field(object):
+        def __init__(self, fmt, offset):
+            self.fmt = fmt; self.offset = offset
+
+    class Message(object): 
+       def __init__(self, name, fields):
+            self._name = name; self._fields = fields
+    
+        def read(self, buf, name):
+            f = self._fields[name]
+            return struct.unpack_from(f.fmt, buf, f.offset)[0]
+
+    Point = Message('Point', {'x': Field('i', 0), 
+                              'y': Field('i', 8),
+                              'color': Field('h', 16)})
+
+    def main():
+        res = 0
+        for p in PLIST:
+            x = Point.read(p, 'x')
+            res += x
+        print res
+
+|end_example|
+|end_scriptsize|
+
+
+Example: faster API
+---------------------
+
+|scriptsize|
+|example<| |small| decode2.py |end_small| |>|
+
+.. sourcecode:: python
+
+    def Message(name, fields):
+        class M(object):
+            def read(self, buf, name):
+                f = getattr(self, name)
+                return struct.unpack_from(f.fmt, buf, f.offset)[0]            
+    
+        for fname, f in fields.iteritems():
+            setattr(M, fname, f)
+    
+        M.__name__ = name
+        return M()
+    
+    Point = Message('Point', {
+        'x': Field('i', 0),
+        'y': Field('i', 4),
+        'color': Field('h', 8)
+        })
+    
+     ...
+     x = Point.read(p, 'x')
+     ...
+
+|end_example|
+|end_scriptsize|
+
+
+What happened?
+---------------
+
+- dict lookups inside classes are specialized
+
+- decode1.py
+
+  * ``fields`` is "normal data" and expected to change
+
+  * one JIT code for **all** possible messages
+
+- decode2.py
+
+  * ``fields`` is expected to be constant
+
+  * one JIT code for **each** message
+
+- Behaviour is the same, different performance
+
+
+Example: even better API :)
+-----------------------------
+
+|scriptsize|
+|example<| |small| decode3.py |end_small| |>|
+
+.. sourcecode:: python
+
+    class Field(object):
+        def __init__(self, fmt, offset):
+            self.fmt = fmt
+            self.offset = offset
+    
+        def __get__(self, obj, cls):
+            return struct.unpack_from(self.fmt, obj._buf, self.offset)[0]
+    
+    class Point(object):
+        def __init__(self, buf):
+            self._buf = buf
+    
+        x = Field('i', 0)
+        y = Field('i', 4)
+        color = Field('h', 8)
+    
+    def main():
+        res = 0
+        for p in PLIST:
+            p = Point(p)
+            res += p.x
+        print res
+
+|end_example|
+|end_scriptsize|
+
+
 Conclusion
 -----------
 
