@@ -471,11 +471,37 @@ How to look at traces (3)
 
 * ``vmprof``
 
-* ``pypy -m vmprof --jitlog -o myfile.vmprof tracing.py``
+|scriptsize|
 
-* ``pypy -m vmprof.upload myfile.vmprof``
+.. sourcecode:: bash
+  
+    $ pypy -m vmprof --jitlog -o myfile.vmprof tracing.py
+    $ pypy -m vmprof.upload myfile.vmprof
 
-* http://vmprof.com/#/18330299-15fd-4a55-9465-9efd85fb66b1/traces
+    http://vmprof.com/#/18330299-15fd-4a55-9465-9efd85fb66b1/traces
+
+|end_scriptsize|
+
+
+More about vmprof
+-----------------
+
+* Sampling profiler, low overhead (~5-10%)
+
+* Works on CPython and PyPy
+
+* JIT-friendly: it does not screw up relative performances
+
+* Profiling of native code (e.g. numpy functions)
+
+* Memory profiler
+
+  - however the GUI seems not to work right now?
+
+* Lots of interest
+
+  - JetBrains sponsored native profiling and wrote their own GUI
+
 
 
 Guards
@@ -579,25 +605,6 @@ Specialization trade-offs
 
   * inefficient code
 
-
-More about vmprof
------------------
-
-* Sampling profiler, low overhead (~5-10%)
-
-* Works on CPython and PyPy
-
-* JIT-friendly: it does not screw up relative performances
-
-* Profiling of native code (e.g. numpy functions)
-
-* Memory profiler
-
-  - however the GUI seems not to work right now?
-
-* Lots of interest
-
-  - JetBrains sponsored native profiling and wrote their own GUI
 
 
 Abstractions for free
@@ -786,6 +793,8 @@ Example: even better API :)
 
 |end_example|
 |end_scriptsize|
+
+* http://vmprof.com/#/58b9696e-0d22-48a8-90eb-af9c51f5dc5c/traces
 
 
 Conclusion
