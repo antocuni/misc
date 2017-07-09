@@ -30,8 +30,12 @@ def main(argv):
     except ImportError:
         pass
 
+    # XXX: find a way to extract them from mplayer()
+    w = 320
+    h = 240
     start = start0 = time()
-    for fcnt, img in enumerate(mplayer(Image, fn)):
+    for fcnt, data in enumerate(mplayer(fn)):
+        img = Image(w, h, data)
         try:
             view(sobel_magnitude(img))
         except IOError, e:

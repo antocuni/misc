@@ -2,14 +2,13 @@ from array import array
 
 class Image(object):
 
-    def __init__(self, w, h, fromfile=None):
+    def __init__(self, w, h, data=None):
         self.width = w
         self.height = h
-        if fromfile is not None:
-            self.data = array('B')
-            self.data.fromfile(fromfile, w*h)
-        else:
+        if data is None:
             self.data = array('B', [0]) * (w*h)
+        else:
+            self.data = data
 
     def _idx(self, p):
         if isinstance(p, Pixel):

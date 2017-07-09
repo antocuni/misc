@@ -2,7 +2,7 @@ import os, re, array
 from subprocess import Popen, PIPE, STDOUT
 
 
-def mplayer(Image, fn='tv://', options=''):
+def mplayer(fn='tv://', options=''):
     f = os.popen('mplayer -really-quiet -noframedrop ' + options + ' ' 
                  '-vo yuv4mpeg:file=/dev/stdout 2>/dev/null </dev/null ' + fn)
     hdr = f.readline()
@@ -12,9 +12,10 @@ def mplayer(Image, fn='tv://', options=''):
         hdr = f.readline()
         if hdr != 'FRAME\n':
             break
-        
-        yield Image(w, h, fromfile=f) # read luminance data ('Y')
+        data = array.array('B')
+        data.fromfile(f, w*h) # read luminance data ('Y')
         f.read(w*h/2) # discard Color data ('U' and 'V')
+        yield data
 
 class MplayerViewer(object):
     def __init__(self):
