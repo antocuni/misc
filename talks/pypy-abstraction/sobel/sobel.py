@@ -11,21 +11,19 @@ import array
 def get(img, x, y):
     w, h, data = img
     i = x + y*w
-    i = min(max(i, 0), len(data)-1)
     return data[i]
 
 def set(img, x, y, value):
     w, h, data = img
     i = x + y*w
-    i = min(max(i, 0), len(data)-1)
     data[i] = value
 
 
 def sobel_v0(img):
     w, h, data = img
     out = w, h, array.array('B', [0]) * (w*h)
-    for y in xrange(h):
-        for x in xrange(w):
+    for y in xrange(1, h-1):
+        for x in xrange(1, w-1):
             dx = (-1.0 * get(img, x-1, y-1) +
                    1.0 * get(img, x+1, y-1) +
                   -2.0 * get(img, x-1, y)   +
@@ -71,12 +69,12 @@ def main(argv):
     start = start0 = time()
     for fcnt, img in enumerate(mplayer(fn)):
         ## v0
-        ## out = sobel_v0(img)
-        ## out = Image(*out)
+        out = sobel_v0(img)
+        out = Image(*out)
 
         ## v2
-        img = Image(*img)
-        out = sobel_magnitude(img)
+        ## img = Image(*img)
+        ## out = sobel_magnitude(img)
 
         try:
             view(out)
