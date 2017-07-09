@@ -12,8 +12,8 @@ def mplayer(Image, fn='tv://', options=''):
         hdr = f.readline()
         if hdr != 'FRAME\n':
             break
-        yield Image(w, h, typecode='B', fromfile=f)
-        f.read(w*h/2) # Color data
+        yield Image(w, h, typecode='B', fromfile=f) # read luminance data ('Y')
+        f.read(w*h/2) # discard Color data ('U' and 'V')
 
 class MplayerViewer(object):
     def __init__(self):

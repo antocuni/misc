@@ -4,7 +4,7 @@ import sys
 import errno
 from time import time
 from mplayer import mplayer, view
-from noborder import NoBorderImagePadded
+from noborder import NoBorderImagePadded, NoBorderImage
 from math import sqrt
 
 def sobel_magnitude(img):
@@ -19,13 +19,11 @@ def sobel_magnitude(img):
     return res
 
 def main(argv):
-
     if len(argv) > 1:
         fn = argv[1]
     else:
         fn = 'test.avi -benchmark' #+ ' -vf scale=640:480'
 
-    sys.setcheckinterval(2**30)
     try:
         import pypyjit
         pypyjit.set_param(trace_limit=200000)
@@ -33,7 +31,7 @@ def main(argv):
         pass
 
     start = start0 = time()
-    for fcnt, img in enumerate(mplayer(NoBorderImagePadded, fn)):
+    for fcnt, img in enumerate(mplayer(NoBorderImage, fn)):
         try:
             view(sobel_magnitude(img))
         except IOError, e:
