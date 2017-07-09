@@ -3,7 +3,7 @@ from array import array
 class NoBorderImage(object):
     "An image class for people who dont care about border effects"
     
-    def __init__(self, w, h, typecode='d', fromfile=None):
+    def __init__(self, w, h, typecode='B', fromfile=None):
         self.width = w
         self.height = h
         if fromfile is not None:
@@ -51,7 +51,7 @@ class NoBorderImage(object):
         self.data.tofile(f)
 
 class NoBorderImagePadded(NoBorderImage):
-    def __init__(self, w, h, typecode='d', fromfile=None):
+    def __init__(self, w, h, typecode='B', fromfile=None):
         self.width = w
         self.height = h
         self.typecode = typecode
