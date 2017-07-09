@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 
+import sys
 import errno
+from time import time
+from mplayer import mplayer, view
 from noborder import NoBorderImagePadded
 from math import sqrt
 
@@ -15,25 +18,10 @@ def sobel_magnitude(img):
         res[p] = min(int(sqrt(dx*dx + dy*dy) / 2.0), 255)
     return res
 
-def main(args):
-    Image = eval(args[0])
-    n = 1000
-    if len(args) == 1:
-        for i in range(10):
-            sobel_magnitude(Image(n, n))
-        return 'sobel(%s(%dx%d))' % (Image.__name__, n, n)
-    else:
-        for i in range(10):
-            sobel_magnitude_uint8(Image(n, n, typecode='B'))
-        return 'sobel_uint8(%s(%dx%d))' % (Image.__name__, n, n)
+def main(argv):
 
-if __name__ == '__main__':
-    from mplayer import mplayer, view
-    import sys
-    from time import time
-
-    if len(sys.argv) > 1:
-        fn = sys.argv[1]
+    if len(argv) > 1:
+        fn = argv[1]
     else:
         fn = 'test.avi -benchmark' #+ ' -vf scale=640:480'
 
@@ -58,3 +46,6 @@ if __name__ == '__main__':
         start = time()
         if fcnt==2:
             start0 = time()
+
+if __name__ == '__main__':
+    main(sys.argv)
