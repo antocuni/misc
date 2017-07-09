@@ -14,12 +14,6 @@ def main(argv):
     else:
         fn = 'test.avi -benchmark' #+ ' -vf scale=640:480'
 
-    try:
-        import pypyjit
-        pypyjit.set_param(trace_limit=200000)
-    except ImportError:
-        pass
-
     start = start0 = time()
     for fcnt, img in enumerate(mplayer(fn)):
         #out = v0.sobel(img)
@@ -41,4 +35,10 @@ def main(argv):
             start0 = time()
 
 if __name__ == '__main__':
+    try:
+        import pypyjit
+        pypyjit.set_param(trace_limit=200000)
+    except ImportError:
+        pass
+
     main(sys.argv)
