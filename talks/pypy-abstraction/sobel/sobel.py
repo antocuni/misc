@@ -4,7 +4,7 @@ import sys
 import errno
 from time import time
 from mplayer import mplayer, view
-from noborder import NoBorderImagePadded, NoBorderImage
+from noborder import NoBorderImage
 from math import sqrt
 
 def sobel_magnitude(img):

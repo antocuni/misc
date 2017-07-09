@@ -3,15 +3,14 @@ from array import array
 class NoBorderImage(object):
     "An image class for people who dont care about border effects"
     
-    def __init__(self, w, h, typecode='B', fromfile=None):
+    def __init__(self, w, h, fromfile=None):
         self.width = w
         self.height = h
         if fromfile is not None:
-            self.data = array(typecode)
+            self.data = array('B')
             self.data.fromfile(fromfile, w*h)
         else:
-            self.data = array(typecode, [0]) * (w*h)
-        self.typecode = typecode
+            self.data = array('B', [0]) * (w*h)
 
     def _idx(self, p):
         if isinstance(p, Pixel):
@@ -50,41 +49,6 @@ class NoBorderImage(object):
     def tofile(self, f):
         self.data.tofile(f)
 
-class NoBorderImagePadded(NoBorderImage):
-    def __init__(self, w, h, typecode='B', fromfile=None):
-        self.width = w
-        self.height = h
-        self.typecode = typecode
-        if fromfile is None:
-            self.data = array(typecode, [0]) * (w*(h+2)+2)
-        else:
-            self.data = array(typecode, [0]) * (w + 1)
-            self.data.fromfile(fromfile, w*h)
-            self.data += array(typecode, [0]) * (w + 1)
-
-    def _idx(self, p):
-        if isinstance(p, Pixel):
-            assert p.image.__class__ is self.__class__
-            assert p.image.width == self.width
-            idx = p.idx
-        else:
-            idx = (p[1]+1) * self.width + p[0] + 1
-        return min(max(idx, 0), len(self.data)-1)
-
-    def pixelrange(self):
-        return xrange(self.width + 1, (self.width+1) * self.height + 1)
-
-    def tofile(self, f):
-        self.data[(self.width+1):(-self.width-1)].tofile(f)
-
-
-class NoBorderImagePadded640x480(NoBorderImagePadded):
-    def _idx(self, p):
-        assert self.width == 640
-        assert self.height == 480
-        assert len(self.data) == 640*(480+2)+2
-        return NoBorderImagePadded._idx(self, p)
-    
 
 class Pixel(object):
     def __init__(self, idx, image):
