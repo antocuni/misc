@@ -21,19 +21,25 @@ class MplayerViewer(object):
     def __init__(self):
         self.width = self.height = None
     def view(self, img):
+        if isinstance(img, tuple):
+            w, h, data = img
+        else:
+            w = img.width
+            h = img.height
+            data = img.data
+        
         if not self.width:
-            w, h = img.width, img.height
             self.mplayer = Popen(['mplayer', '-', '-benchmark',
                                   '-demuxer', 'rawvideo',
                                  '-rawvideo', 'w=%d:h=%d:format=y8' % (w, h),
                                  '-really-quiet'],
                                  stdin=PIPE, stdout=PIPE, stderr=PIPE)
             
-            self.width = img.width
-            self.height = img.height
-        assert self.width == img.width
-        assert self.height == img.height
-        img.tofile(self.mplayer.stdin)
+            self.width = w
+            self.height = h
+        assert self.width == w
+        assert self.height == h
+        data.tofile(self.mplayer.stdin)
 
 default_viewer = MplayerViewer()
 
