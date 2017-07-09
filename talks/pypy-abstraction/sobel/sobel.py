@@ -6,6 +6,44 @@ from time import time
 from mplayer import mplayer, view
 from image import Image
 from math import sqrt
+import array
+
+def get(img, x, y):
+    w, h, data = img
+    i = x + y*w
+    i = min(max(i, 0), len(data)-1)
+    return data[i]
+
+def set(img, x, y, value):
+    w, h, data = img
+    i = x + y*w
+    i = min(max(i, 0), len(data)-1)
+    data[i] = value
+
+
+def sobel_v0(img):
+    w, h, data = img
+    out = w, h, array.array('B', [0]) * (w*h)
+    for y in xrange(h):
+        for x in xrange(w):
+            dx = (-1.0 * get(img, x-1, y-1) +
+                   1.0 * get(img, x+1, y-1) +
+                  -2.0 * get(img, x-1, y)   +
+                   2.0 * get(img, x+1, y)   +
+                  -1.0 * get(img, x-1, y+1) +
+                   1.0 * get(img, x+1, y+1))
+            #
+            dy = (-1.0 * get(img, x-1, y-1) +
+                  -2.0 * get(img, x,   y-1) +
+                  -1.0 * get(img, x+1, y-1) +
+                   1.0 * get(img, x-1, y+1) +
+                   2.0 * get(img, x,   y+1) +
+                   1.0 * get(img, x+1, y+1))
+            #
+            value = min(int(sqrt(dx*dx + dy*dy) / 2.0), 255)
+            set(out, x, y, value)
+    return out
+
 
 def sobel_magnitude(img):
     res = img.clone()
@@ -30,14 +68,18 @@ def main(argv):
     except ImportError:
         pass
 
-    # XXX: find a way to extract them from mplayer()
-    w = 320
-    h = 240
     start = start0 = time()
-    for fcnt, data in enumerate(mplayer(fn)):
-        img = Image(w, h, data)
+    for fcnt, img in enumerate(mplayer(fn)):
+        ## v0
+        ## out = sobel_v0(img)
+        ## out = Image(*out)
+
+        ## v2
+        img = Image(*img)
+        out = sobel_magnitude(img)
+
         try:
-            view(sobel_magnitude(img))
+            view(out)
         except IOError, e:
             if e.errno != errno.EPIPE:
                 raise

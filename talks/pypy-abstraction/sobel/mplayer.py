@@ -15,7 +15,7 @@ def mplayer(fn='tv://', options=''):
         data = array.array('B')
         data.fromfile(f, w*h) # read luminance data ('Y')
         f.read(w*h/2) # discard Color data ('U' and 'V')
-        yield data
+        yield w, h, data
 
 class MplayerViewer(object):
     def __init__(self):
