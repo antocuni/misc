@@ -60,7 +60,7 @@ def main(args):
         return 'sobel_uint8(%s(%dx%d))' % (Image.__name__, n, n)
 
 if __name__ == '__main__':
-    from io import mplayer, view
+    from mplayer import mplayer, view
     import sys
     from time import time
 
