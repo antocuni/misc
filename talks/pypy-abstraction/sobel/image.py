@@ -1,8 +1,7 @@
 from array import array
 
-class NoBorderImage(object):
-    "An image class for people who dont care about border effects"
-    
+class Image(object):
+
     def __init__(self, w, h, fromfile=None):
         self.width = w
         self.height = h

@@ -4,7 +4,7 @@ import sys
 import errno
 from time import time
 from mplayer import mplayer, view
-from noborder import NoBorderImage
+from image import Image
 from math import sqrt
 
 def sobel_magnitude(img):
@@ -31,7 +31,7 @@ def main(argv):
         pass
 
     start = start0 = time()
-    for fcnt, img in enumerate(mplayer(NoBorderImage, fn)):
+    for fcnt, img in enumerate(mplayer(Image, fn)):
         try:
             view(sobel_magnitude(img))
         except IOError, e:
