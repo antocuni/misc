@@ -4,20 +4,9 @@ import sys
 import errno
 from time import time
 from mplayer import mplayer, view
-from image import Image
 from math import sqrt
 import array
-
-def sobel_magnitude(img):
-    res = img.clone()
-    for p in img.pixeliter():
-        dx = -1.0 * img[p + (-1,-1)] + 1.0 * img[p + (1,-1)] + \
-             -2.0 * img[p + (-1, 0)] + 2.0 * img[p + (1, 0)] + \
-             -1.0 * img[p + (-1, 1)] + 1.0 * img[p + (1, 1)]
-        dy = -1.0*img[p + (-1,-1)] -2.0*img[p + (0,-1)] -1.0*img[p + (1,-1)] + \
-              1.0*img[p + (-1, 1)] +2.0*img[p + (0, 1)] +1.0*img[p + (1, 1)]
-        res[p] = min(int(sqrt(dx*dx + dy*dy) / 2.0), 255)
-    return res
+import v0, v1, v2, v3
 
 def main(argv):
     if len(argv) > 1:
@@ -33,13 +22,10 @@ def main(argv):
 
     start = start0 = time()
     for fcnt, img in enumerate(mplayer(fn)):
-        ## v0
-        out = sobel_v0(img)
-        out = Image(*out)
-
-        ## v2
-        ## img = Image(*img)
-        ## out = sobel_magnitude(img)
+        #out = v0.sobel(img)
+        #out = v1.sobel(img)
+        #out = v2.sobel(img)
+        out = v3.sobel(img)
 
         try:
             view(out)
