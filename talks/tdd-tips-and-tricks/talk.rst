@@ -56,10 +56,10 @@ Disclaimer
 -----------
 
 .. image:: img/commit.png
-   :scale: 20%
+   :scale: 40%
 
 .. image:: img/table-mountain.jpg
-   :scale: 80%
+   :scale: 60%
 
 Disclaimer
 -----------
