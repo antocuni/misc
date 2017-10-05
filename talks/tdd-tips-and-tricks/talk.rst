@@ -35,6 +35,44 @@ Two parts
 * Useful patterns and tips
 
 
+Disclaimer
+-----------
+
+**I wanted to show more examples**
+
+Disclaimer
+-----------
+
+.. image:: img/cape-of-good-hope.jpg
+   :scale: 80%
+
+Disclaimer
+-----------
+
+.. image:: img/penguins.jpg
+   :scale: 80%
+
+Disclaimer
+-----------
+
+.. image:: img/commit.png
+   :scale: 20%
+
+.. image:: img/table-mountain.jpg
+   :scale: 80%
+
+Disclaimer
+-----------
+
+.. image:: img/beer.jpg
+   :scale: 50%
+
+Disclaimer
+-----------
+
+Let's start
+
+  
 The goal of testing
 --------------------
 
@@ -259,7 +297,7 @@ Factorial example
 Factorial example
 -----------------
 
-.. image:: factorial-bug.png
+.. image:: img/factorial-bug.png
    :scale: 70%
 
 Factorial example
@@ -568,7 +606,7 @@ Decoupling components
 Notation
 ---------
 
-.. image:: the-practice-of-programming.jpg
+.. image:: img/the-practice-of-programming.jpg
    :scale: 10%
            
 - Chapter 9: Notation
@@ -629,13 +667,7 @@ https://bitbucket.org/pypy/pypy/src/5a1232a1c2e6e01422713659c57ae3bcd5db3f70/rpy
 Q&A
 ---------------
 
+- @antocuni
 
-
-- unittest2
-
-- nose
-
-- pytest
-
-- tox
+- https://bitbucket.org/antocuni/misc/src/704c99980401dbb638387ded33e6c23157a68345/talks/tdd-tips-and-tricks/?at=default
 
