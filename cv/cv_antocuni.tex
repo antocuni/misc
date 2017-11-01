@@ -15,10 +15,8 @@
 \firstname{Antonio}
 \familyname{Cuni}
 \title{Curriculum Vitae} 
-\address{Via Perniciaro 70}{16010 Mele(GE) -- Italy}
-\mobile{+39-3455075567}
-\phone{+39-0106319262}
 \email{info@antocuni.eu}
+\extrainfo{http://antocuni.eu}
 \photo[64pt]{antocuni} % '64pt' is the height the picture must be resized to
 % \quote{
 % Considerate la vostra semenza: \\
@@ -28,7 +26,7 @@
 % }
 
 \quote{
-  Last updated: June 15, 2012
+  Last updated: November 1, 2017
 }
 
 %\nopagenumbers{} % uncomment to suppress automatic page numbering for CVs longer than one page
@@ -64,24 +62,25 @@
 \cvitem{PyPy and FLOSS}{I have been a core contributor to various aspects of
   PyPy since 2006, including the development of the CLI/.NET and JVM backends,
   the CLI JIT backend, the PyPy JIT compiler generator, the PyPy Python
-  interpreter and the testing infrastructure.  Currently, I am the project
-  leader of the Py3k subproject, whose goal is to develop a PyPy interpreter
-  compatible with Python3. In the recent past, I leaded the
-  migration of the PyPy repository from Subversion to Mercurial.  Other than
-  PyPy, I started and have contributed to several FLOSS projects, as detailed
-  below.}
+  interpreter and the testing infrastructure.  Currently, I am interested in
+  optimizing the \emph{cpyext} module, with the final goal of making the whole
+  Python scientific ecosystem very fast on PyPY.  In the recent past, I leaded
+  the migration of the PyPy repository from Subversion to Mercurial.  Other
+  than PyPy, I started and have contributed to several FLOSS projects, as
+  detailed below.}
 
-\cvitem{Methodologies}{Thanks to my experience with PyPy, I have a strong and
-  positive experience w.r.t. distributed, agile, sprint-driven and test-driven
-  development, including good communication skills through IRC and emails, the
-  ability to work from home and to be self-motivated to accomplish my goals.}
+\cvitem{Methodologies}{I am addicted to TDD, and I don't even consider jobs or
+  positions for which tests are not important.  I care \emph{a lot} about
+  designing beautiful and Pythonic APIs. Thanks to my experience with PyPy, I
+  have a strong and positive experience w.r.t. distributed, agile,
+  sprint-driven and test-driven development, including good communication
+  skills through IRC and emails, the ability to work from home and to be
+  self-motivated to accomplish my goals.}
 
 
 \section{Spoken languages}
 \cvlanguage{Italian}{Native speaker}{}
 \cvlanguage{English}{Fluent}{Cambridge FIRST Certificate in English}
-
-\clearpage
 
 \section{Education}
 \cventry{2007 -- 2010}{Ph.D. in Computer Science}{DISI}{Università degli Studi
@@ -113,6 +112,15 @@ compiler generator for dynamic languages.}}
 \cvitem{}{}
 
 \section{Employment History}
+\cventry{2012 -- now}{Consultant}{Gambit Research}{}{} {My primary task in
+  Gambit is to take their existing system and make it fast(er).  I cured the
+  switch from CPython to PyPy: after optimizing the code specifically for
+  PyPy, I got speedups in the order of 10-20x.  To speed up the time spent in
+  inter-process communication, I developed \emph{capnpy}, which is a
+  (de)serialization library for Cap'n Proto whose speed ranges from ``very
+  fast'' on CPython to ``embarassingly fast'' on PyPy.  Moreover, I also
+  helped to generally improve test coverage of some projects.}
+
 \cventry{2001 -- now}{Freelance software developer and architect}{My own
   consultancy}{}{} {During the years, I have designed and implemented numerous
   software systems of various sizes and complexity, involving several
@@ -152,6 +160,10 @@ particular for the development of the Just In Time (JIT) Compiler generator.}
   languages, featuring among the others a JIT compiler
   generator. \url{http://pypy.org/}}
 
+\cvitem{PyPy ecosystem}{I also contributes to many projects which are strongly
+  related to PyPy and/or have been started by the PyPy team. The two most
+  notable ones are \texttt{CFFI} and \texttt{vmprof}, which was started by me.}
+
 \subsection{Projects started/owned by me}
 \cvitem{pdb++}{drop-in replacement and an extension of the standard
   \texttt{pdb} command line debugger found in the Python Standard Library.  It
@@ -160,12 +172,16 @@ particular for the development of the Just In Time (JIT) Compiler generator.}
   simple project, \texttt{pdb++} had an extremely good impact on the
   development experience of me and of the other PyPy developers that started
   using it. }
-\cvitem{}{\url{http://bitbucket.org/antocuni/pdb/}}\vspace{0.2cm}
+\cvitem{}{\url{https://github.com/antocuni/pdb/}}\vspace{0.2cm}
 
 \cvitem{fancycompleter}{Colorful and sane TAB completion of Python expressions
   for both the interactive interpreter and the \texttt{pdb++} command
   prompt.}
 \cvitem{}{\url{http://bitbucket.org/antocuni/fancycompleter/}}\vspace{0.2cm}
+
+\cvitem{capnpy}{Cap'n Proto serialization for Python. Heavily optimized for
+  both CPython and PyPy.}
+\cvitem{}{\url{https://github.com/antocuni/capnpy}}\vspace{0.2cm}
 
 \cvitem{wmctrl}{Python module to programmatically control windows inside X}
 \cvitem{}{\url{http://bitbucket.org/antocuni/wmctrl/}}\vspace{0.2cm}
@@ -206,6 +222,22 @@ particular for the development of the Just In Time (JIT) Compiler generator.}
 \bibliography{publications}       % 'publications' is the name of a BibTeX file
 
 \section{Presentations and talks at international conferences}
+
+\cvitem{PyCon ZA '17, Cape Town}{Antonio Cuni: \emph{The practice of TDD:
+    tips\&tricks}}
+\cvitem{EuroPython '17, Rimini}{Antonio Cuni: \emph{The joy of PyPy JIT:
+    Abstractions for Free}}
+\cvitem{PyCon Italia '17, Firenze}{Antonio Cuni: \emph{PyPy Status Update}}
+\cvitem{EuroPython '15, Bilbao}{Antonio Cuni: \emph{Python and PyPy
+    performance (not) for dummies}}
+\cvitem{PyCon Italia '15, Firenze}{Antonio Cuni: \emph{PyPy JIT (not) for
+    dummies}}
+\cvitem{EuroPython '13, Firenze}{Antonio Cuni: \emph{Bug Hunting for Dummies}}
+\cvitem{PyCon UK '12, Coventry}{Antonio Cuni: \emph{PyPy JIT under the hood}}
+\cvitem{EuroPython '12, Firenze}{Antonio Cuni: \emph{PyPy JIT under the hood}}
+\cvitem{EuroPython '12, Firenze}{Antonio Cuni: \emph{Python White Magic}}
+\cvitem{EuroPython '12, Firenze}{Antonio Cuni, Armin Rigo: \emph{PyPy: current
+    status and the GIL-less future}}
 \cvitem{EuroPython '11, Firenze}{Antonio Cuni, Armin Rigo: \emph{PyPy in
     production.}}
 \cvitem{EuroPython '11, Firenze}{Antonio Cuni, Armin Rigo: \emph{PyPy hands-on.}}
