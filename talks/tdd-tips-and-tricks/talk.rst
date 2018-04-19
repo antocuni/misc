@@ -34,44 +34,6 @@ Two parts
 
 * Useful patterns and tips
 
-
-Disclaimer
------------
-
-**I wanted to show more examples**
-
-Disclaimer
------------
-
-.. image:: img/cape-of-good-hope.jpg
-   :scale: 80%
-
-Disclaimer
------------
-
-.. image:: img/penguins.jpg
-   :scale: 80%
-
-Disclaimer
------------
-
-.. image:: img/commit.png
-   :scale: 40%
-
-.. image:: img/table-mountain.jpg
-   :scale: 60%
-
-Disclaimer
------------
-
-.. image:: img/beer.jpg
-   :scale: 50%
-
-Disclaimer
------------
-
-Let's start
-
   
 The goal of testing
 --------------------
