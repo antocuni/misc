@@ -1,0 +1,9 @@
+\definecolor{rrblitbackground}{rgb}{0.0, 0.0, 0.0}
+
+\title[HPy]{HPy: a future-proof way of extending Python?}
+\author[antocuni]
+{Antonio Cuni}
+
+\institute{Python Language Summit}
+\date{April 15 2020}
+\date{}
