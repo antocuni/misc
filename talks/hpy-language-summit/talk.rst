@@ -178,3 +178,98 @@ HPy strategy to conquer the world
 * (Optional) Universal ABI: one binary for multiple versions/implementations
 
 * Cython backend
+
+
+HPy targets
+-----------
+
+.. image:: img/hpy.pdf
+   :scale: 50%
+
+
+CPython ABI
+-----------
+
+|scriptsize|
+
+.. sourcecode:: c
+
+   // hpy/cpython.h
+
+   typedef struct { PyObject *_o; } HPy;
+
+   static inline HPy HPy_Dup(HPyContext ctx, HPy handle) {
+       Py_XINCREF(handle._o);
+       return handle;
+   }
+
+   static inline HPy HPyLong_FromLong(HPyContext ctx, long v)
+   {
+       return (HPy){PyLong_FromLong(v)};
+   }
+
+|end_scriptsize|
+
+
+Universal ABI
+--------------
+
+|scriptsize|
+
+.. sourcecode:: c
+
+   // hpy/universal.h
+
+   /* a word-sized opaque field: can be an index, a pointer, whatever */
+   typedef struct { HPy_ssize_t _i; } HPy;
+
+   struct _HPyContext_s {
+       int ctx_version;
+       ...
+       HPy (*ctx_Dup)(HPyContext ctx, HPy h);
+       HPy (*ctx_Long_FromLong)(HPyContext ctx, long value);
+       ...
+   };
+   typedef struct _HPyContext_s *HPyContext;
+
+   static inline HPy HPy_Dup(HPyContext ctx, HPy h) {
+        return ctx->ctx_Dup ( ctx, h );
+   }
+
+   static inline HPy HPyLong_FromLong(HPyContext ctx, long value) {
+        return ctx->ctx_Long_FromLong ( ctx, value );
+   }
+
+|end_scriptsize|
+
+
+Implementation on PyPy
+-----------------------
+
+|scriptsize|
+
+.. sourcecode:: python
+
+   # pseudocode
+
+   class HandleManager:
+       def __init__(self):
+           # GC-managed! The items inside the list might move in memory
+           self.handles_w = []
+       def new(self, w_obj):
+           i = self._find_empty_index()
+           self.handles_w[i] = w_obj
+           return i
+       ...
+
+   def ctx_Long_FromLong(space, value):
+       w_obj = space.newint(value)
+       return handle_manager.new(w_obj)
+
+   def make_context():
+       ctx = lltype.malloc(HPyContext)
+       ctx.ctx_Long_FromLong = ctx_Long_FromLong
+       ...
+       return ctx
+
+|end_scriptsize|
