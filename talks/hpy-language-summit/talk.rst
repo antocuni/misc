@@ -28,57 +28,57 @@ What is the problem?
 
 * Many implementation details are exposed by/backed in the API
 
-* Alternative implementations have to "emulate" CPython
-
 * CPython can't evolve / change its details
 
-Detail 1: refcounting
-----------------------
+* Alternative implementations have to "emulate" CPython
 
-* This is obviously backed in in the API :)
 
-  - ``Py_INCREF``, ``Py_DECREF``, etc.
+Exposed details
+-----------------
 
-* Does not play well with GCs
+* Reference counting
 
-* Note: the GC is **not** (only) about collecting garbage!
+* Objects as C pointers (``PyObject *``)
+
+  - Implicit assumption that Python-level ``is`` is the same as C-level ``==``
+
+* Structs not fully opaque
+
+  - ``ob_refcnt``, ``ob_type``, ``PyTypeObject``, ...
+
+  - PEP 384 goes in the right direction
+
+* Borrowed references
+
+  - ``PyList_GetItem`` ==> borrowed reference
+
+  - In PyPy, ``[1, 2, 3, 4]`` is represented as a C ``long[]``
+
+  - No references to borrow!
+
+
+Refcounting vs GC
+------------------
+
+* Refcounting prevents using a "real" GC
+
+* The GC is **not** (only) about collecting garbage!
 
   - It should be called `Memory Manager`
 
-  - A state-of-the-art GC means very fast memory allocation
+* State-of-the-art GCs:
 
+  - super-fast allocation, fast deallocation
 
-Detail 2: ``PyObject *``
--------------------------
+  - no/minimal pauses
 
-* Objects are represented by C pointers
+  - multi-threading (not the PyPy GC)
 
-* Implicit assumption that Python-level object identity is the same as C-level
-  pointer equality
+  - ...
 
-* Plays **very** bad with a moving GC
+- E.g., on `gcbench.py`_, PyPy is ~25x faster than CPython!
 
-
-Detail 3: memory layout of structs/objects
--------------------------------------------
-
-* C-level structs oshould be fully opaque
-
-* Example: ``ob_type``
-
-* Example: ``PyTypeObject``
-
-* PEP 384 goes in the right direction
-
-
-Detail 4: implicit assumptions on the implementation of data structures
--------------------------------------------------------------------------
-
-* ``PyList_GetItem`` ==> borrowed reference
-
-* In PyPy, lists of ints are stored as C arrays of primitive types: there is
-  no reference to borrow!
-
+.. _`gcbench.py`: https://foss.heptapod.net/pypy/pypy/blob/branch/default/rpython/translator/goal/gcbench.py
 
 CPython
 --------
@@ -114,7 +114,7 @@ Alternative implementations
 
   - ...
 
-* Massive amout of previous developer hours wasted
+* Massive amout of precious developer hours wasted
 
 * Poor results
 
@@ -126,7 +126,7 @@ HPy solution
 
 * Fully opaque data structures by default
 
-* Higher level concepts, e.g. **handles**
+* GC-friendly: **handles**
 
   - Like file descriptors of Windows's ``HANDLE``
 
@@ -152,3 +152,29 @@ HPy solution
     HPy_Close(a); // WRONG!
 
 |end_scriptsize|
+
+
+HPy strategy to conquer the world
+----------------------------------
+
+* Zero overhead on CPython
+
+  - Using macros and ``static inline`` to map HPy to C-API
+
+* Incremental adoption
+
+  - Port existing extensions one function at a time
+
+* Faster on alternative implementations
+
+  - 3x faster than cpyext on PyPy
+
+  - 2x faster on GraalPython (could be optimized further)
+
+* Better debugging experience
+
+  - "The handle created at foo.c:543 was never closed"
+
+* (Optional) Universal ABI: one binary for multiple versions/implementations
+
+* Cython backend
