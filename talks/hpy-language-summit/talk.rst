@@ -20,6 +20,9 @@ What is HPy?
 
 * |scriptsize| https://hpy.readthedocs.io/en/latest/ |end_scriptsize|
 
+* |scriptsize| https://mail.python.org/archives/list/hpy-dev@python.org/ |end_scriptsize|
+
+* |scriptsize| ``#hpy`` on ``freenode`` |end_scriptsize|
 
 What is the problem?
 --------------------
@@ -190,7 +193,21 @@ HPy strategy to conquer the world
 HPy targets
 -----------
 
-.. image:: img/hpy.pdf
+.. image:: img/hpy1.pdf
+   :scale: 50%
+   :align: center
+
+HPy targets
+-----------
+
+.. image:: img/hpy2.pdf
+   :scale: 50%
+   :align: center
+
+HPy targets
+-----------
+
+.. image:: img/hpy3.pdf
    :scale: 50%
    :align: center
 
