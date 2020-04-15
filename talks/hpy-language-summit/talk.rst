@@ -32,6 +32,11 @@ What is the problem?
 
 * Alternative implementations have to "emulate" CPython
 
+* Related work:
+
+  - Stable ABI, PEP 384
+
+  - |scriptsize| https://pythoncapi.readthedocs.io/ |end_scriptsize|
 
 Exposed details
 -----------------
@@ -153,6 +158,8 @@ HPy solution
 
 |end_scriptsize|
 
+* ``HPyContext`` passed everywhere (useful for subinterpreters, etc.)
+
 
 HPy strategy to conquer the world
 ----------------------------------
@@ -185,6 +192,7 @@ HPy targets
 
 .. image:: img/hpy.pdf
    :scale: 50%
+   :align: center
 
 
 CPython ABI
@@ -273,3 +281,52 @@ Implementation on PyPy
        return ctx
 
 |end_scriptsize|
+
+
+Current status
+---------------
+
+* No type objects yet (WIP)
+
+* Produce native CPython and HPy Universal extensions
+
+* ultrajson-hpy
+
+  - CPython ABI: as fast as ultrajson
+
+  - Universal ABI on CPython: 10% slower
+
+  - Universal ABI on PyPy: 3x faster
+
+  - |scriptsize| https://github.com/pyhandle/ultrajson-hpy |end_scriptsize|
+
+* The current approach works on the technical level
+
+* The biggest challenge will be adoption
+
+  - Speed on PyPy might be the most important driving force in the short term
+
+Next steps
+-----------
+
+* Short term
+
+    - Custom types in C
+
+    - Validate the approach by porting PicoNumpy
+
+      - |scriptsize| https://github.com/paugier/piconumpy |end_scriptsize|
+
+    - Debug mode
+
+* Medium term
+
+  - Cython backend
+
+  - Experiment with the real numpy
+
+* Long term
+
+  - PEP
+
+  - Official PSF/CPython endorsement?
