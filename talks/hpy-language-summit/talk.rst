@@ -332,7 +332,7 @@ Next steps
 
     - Validate the approach by porting PicoNumpy
 
-      - |scriptsize| https://github.com/paugier/piconumpy |end_scriptsize|
+    - |scriptsize| https://github.com/paugier/piconumpy |end_scriptsize|
 
     - Debug mode
 
@@ -347,3 +347,7 @@ Next steps
   - PEP
 
   - Official PSF/CPython endorsement?
+
+* Hypotetical sci-fi future :)
+
+  - CPython switches to HPy internally
