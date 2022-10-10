@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+  <head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>PyScript slides</title>
+    <link rel="stylesheet" href="slides.css">
+
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+  </head>
+
+
+  <body>
+    <py-script>
+    import js
+    import pyodide.ffi
+    ALL_SLIDES = js.document.getElementsByClassName("slide")
+    CURRENT_SLIDE = 0
+
+    def show_slide(n):
+        """
+        Show the slide number n, and hide all the others
+        """
+        global CURRENT_SLIDE
+        id = f"slide{n}"
+        to_show = js.document.getElementById(id)
+        if not to_show:
+            js.console.error(f"cannot find slide {id}")
+            return
+
+        for slide in ALL_SLIDES:
+            slide.classList.add("hidden")
+        to_show.classList.remove("hidden")
+
+        js.console.log("Current slide:", n);
+        CURRENT_SLIDE = n
+
+    def on_keydown(event):
+        """
+        Show the next/previous slide, depending on the key
+        """
+        js.console.log("keydown:", event.key)
+        if event.key in ("ArrowLeft", "ArrowUp", "PageUp"):
+            show_slide(CURRENT_SLIDE - 1)
+        elif event.key in ("ArrowRight", "ArrowDown", "PageDown", "Enter"):
+            show_slide(CURRENT_SLIDE + 1)
+
+    js.document.addEventListener('keydown', pyodide.ffi.create_proxy(on_keydown))
+    show_slide(1)  # show initial slide
+    </py-script>
+
+
+    <div id="slide1" class="slide">
+      <h1>Who am I</h1>
+      <ul>
+        <li>PyPy core dev</li>
+        <li>PyScript core dev</li>
+        <li>...</li>
+      </ul>
+    </div>
+
+    <div id="slide2" class="slide">
+      <h1>Hello</h1>
+      <ul>
+        <li>foo</li>
+        <li>bar</li>
+        <li>...</li>
+      </ul>
+    </div>
+
+	</body>
+</html>
