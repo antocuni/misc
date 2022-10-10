@@ -9,10 +9,21 @@
 
     <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
     <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.6.0/build/styles/default.min.css">
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.6.0/build/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+
   </head>
 
 
   <body>
+    <py-config>
+      packages = [
+      "matplotlib"
+      ]
+    </py-config>
+
     <py-script>
     import js
     import pyodide.ffi
@@ -44,29 +55,212 @@
         js.console.log("keydown:", event.key)
         if event.key in ("ArrowLeft", "ArrowUp", "PageUp"):
             show_slide(CURRENT_SLIDE - 1)
-        elif event.key in ("ArrowRight", "ArrowDown", "PageDown", "Enter"):
+        elif event.key in ("ArrowRight", "ArrowDown", "PageDown"):
             show_slide(CURRENT_SLIDE + 1)
 
     js.document.addEventListener('keydown', pyodide.ffi.create_proxy(on_keydown))
     show_slide(1)  # show initial slide
     </py-script>
 
-
     <div id="slide1" class="slide">
-      <h1>Who am I</h1>
-      <ul>
-        <li>PyPy core dev</li>
-        <li>PyScript core dev</li>
-        <li>...</li>
-      </ul>
+      <h1>PyBerlin 35</h1>
+      <h3>🍁🍁 Autumn event 🍁🍁</h3>
+      <br>
+
+      <div class="big">PyScript</div>
+
+      <br><br><br>
+
+      <p>
+        Get this slides at:<br>
+        <a href="https://github.com/antocuni/misc/tree/master/talks/pyberlin-pyscript">https://github.com/antocuni/misc/tree/master/talks/pyberlin-pyscript</a>
+      </p>
+
+      <div style="text-align: right">Antonio Cuni</div>
+      <div style="text-align: right">acuni@anaconda.com</div>
     </div>
 
     <div id="slide2" class="slide">
-      <h1>Hello</h1>
+      <h1>Who am I</h1>
       <ul>
-        <li>foo</li>
-        <li>bar</li>
-        <li>...</li>
+        <li>Principal Software Engineer @ Anaconda</li>
+        <li>@antocuni</li>
+        <li>PyPy core dev</li>
+        <li>HPy founder</li>
+        <li>Author/contributor to many other: pdb++, cffi, vmprof, ...</li>
+        <li><b>PyScript core dev</b></li>
+      </ul>
+    </div>
+
+    <div id="slide3" class="slide">
+      <h1>What is PyScript</h1>
+      <ul>
+        <li>TL;DR: Python in the browser</li>
+        <li>A platform to run Python apps in the browser</li>
+        <li>Does not replace JS, but complement it</li>
+        <li>It's <b>real</b> Python: full language and ecosystem</li>
+        <li><a href="https://pyscript.net">https://pyscript.net</a>
+      </ul>
+    </div>
+
+    <div id="slide4" class="slide">
+      <h1>Underlying technology</h1>
+      <ul>
+        <li><b>WebAssembly</b>: portable "CPU" which runs everywhere (at nearly native speed!)</li>
+        <li><b>Emscripten</b>: take legacy C/C++ code and compile it to WASM</li>
+        <li><b>Pyodide</b>: compiles CPython to WASM + Python/JS bridge</li>
+        <li><b>Pyodide</b> again: many thanks to the Pyodide team!</li>
+      </ul>
+    </div>
+
+    <div id="slide5" class="slide">
+      <h1>Hello world</h1>
+      <a href="https://pyscript.net/examples/hello_world.html">https://pyscript.net/examples/hello_world.html</a>
+
+      <pre><code class="language-html">
+  &lt;head&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://pyscript.net/latest/pyscript.css&quot; /&gt;
+    &lt;script defer src=&quot;https://pyscript.net/latest/pyscript.js&quot;&gt;&lt;/script&gt;
+  &lt;/head&gt;
+
+  &lt;body&gt;
+    Hello world! &lt;br&gt;
+    This is the current date and time, as computed by Python:
+    &lt;py-script&gt;
+        from datetime import datetime
+        now = datetime.now()
+        now.strftime(&quot;%m/%d/%Y, %H:%M:%S&quot;)
+    &lt;/py-script&gt;
+  &lt;/body&gt;
+      </code></pre>
+    </div>
+
+    <div id="slide6" class="slide">
+      <h1>Hello world for real</h1>
+
+      <ul>
+        <li>In the HTML of this page, there is a &lt;py-script&gt; tag to
+        execute the code of the previous slide</li>
+        <li>Current time as computed by PyScript:
+          <py-script>
+            from datetime import datetime
+            now = datetime.now()
+            now.strftime(&quot;%m/%d/%Y, %H:%M:%S&quot;)
+          </py-script>
+        </li>
+      </ul>
+    </div>
+
+
+    <div id="slide7" class="slide">
+      <h1>&lt;py-repl&gt;</h1>
+      <ul>
+        <li>Interactive, notebook-style code cell</li>
+        <li>Can be placed anywhere in your HTML</li>
+        <li>Can access all the functions, objects and variables defined by other &lt;py-*&gt; tags</li>
+      </ul>
+      <py-repl>
+        # 'now' is the variable which was assigned by the previous example
+        print(now)
+      </py-repl>
+
+      <py-repl auto-generate="true">
+        # more complex code and interaction with JS
+        import js
+        def change_color(color):
+            elem = js.document.getElementById("slide7")
+            elem.style.color = color
+
+        change_color("red");
+      </py-repl>
+    </div>
+
+    <div id="slide8" class="slide">
+      <h1>Advantages</h1>
+      <ul>
+        <li>Easily distribute your apps</li>
+        <li>It's just an HTML file, only static hosting needed</li>
+        <li>No need for complex installation/setup/environment creation/...</li>
+    </div>
+
+    <div id="slide9" class="slide">
+      <h1>PyScript for data visualization</h1>
+      <a href="https://pyscript.net/examples/matplotlib.html">https://pyscript.net/examples/matplotlib.html</a>
+
+      <py-repl>
+import matplotlib.pyplot as plt
+import matplotlib.tri as tri
+import numpy as np
+
+# First create the x and y coordinates of the points.
+n_angles = 36
+n_radii = 8
+min_radius = 0.25
+radii = np.linspace(min_radius, 0.95, n_radii)
+
+angles = np.linspace(0, 2 * np.pi, n_angles, endpoint=False)
+angles = np.repeat(angles[..., np.newaxis], n_radii, axis=1)
+angles[:, 1::2] += np.pi / n_angles
+
+x = (radii * np.cos(angles)).flatten()
+y = (radii * np.sin(angles)).flatten()
+z = (np.cos(radii) * np.cos(3 * angles)).flatten()
+
+# Create the Triangulation; no triangles so Delaunay triangulation created.
+triang = tri.Triangulation(x, y)
+
+# Mask off unwanted triangles.
+triang.set_mask(np.hypot(x[triang.triangles].mean(axis=1),
+                         y[triang.triangles].mean(axis=1))
+                < min_radius)
+
+fig1, ax1 = plt.subplots()
+ax1.set_aspect('equal')
+tpc = ax1.tripcolor(triang, z, shading='flat')
+fig1.colorbar(tpc)
+ax1.set_title('tripcolor of Delaunay triangulation, flat shading')
+
+fig1
+      </py-repl>
+    </div>
+
+    <div id="slide10" class="slide">
+      <h1>Other demo</h1>
+      <ul>
+        <li>Write an HTML slide show in few lines of Python code!</li>
+        <li>(check the source code of this file)</li>
+      </ul>
+    </div>
+
+    <div id="slide11" class="slide">
+      <h1>Current status and future</h1>
+      <ul>
+        <li>Supported by Anaconda but OSS for <b>real</b></li>
+        <li>Only few months old</li>
+        <li>Still considered alpha, expect your code to break (sorry)</li>
+        <li>(but you can just pin to a specific version and it will run forever)</li>
+        <li>Many design decisions to take and to solve</li>
+        <li>JS and Python are two different beasts</li>
+        <li>Startup is too slow</li>
+        <li>Support for other interpreters is coming (micropython!)</li>
+      </ul>
+    </div>
+
+    <div id="slide12" class="slide">
+      <h1>Q & A</h1>
+      Upcoming Events:
+      <ul>
+        <li>PyScript community call: 18th October, 18 CEST: <a href="https://github.com/pyscript/pyscript/issues/836">https://github.com/pyscript/pyscript/issues/836</a></li>
+        <li>PyCon DE Training day: 21st October: <a href="https://2023.pycon.de/blog/training-day-october-22/">https://2023.pycon.de/blog/training-day-october-22/</a></li>
+        <li>PyBerlin workshop -- stay tuned</li>
+      </ul>
+
+      Links:
+      <ul>
+        <li><a href="https://pyscript.net">https://pyscript.net</a></li>
+        <li><a href="https://pyscript.net/examples">https://pyscript.net/examples</a></li>
+        <li><a href="https://github.com/pyscript/pyscript/">https://github.com/pyscript/pyscript/</a></li>
+        <li>Official discord channel (link inside the README on github)</li>
       </ul>
     </div>
 
