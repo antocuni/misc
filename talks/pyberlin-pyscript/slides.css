@@ -49,3 +49,11 @@ div.slide {
     width: 100%;
     text-align: center;
 }
+
+
+a, a:visited
+{
+    text-decoration: none;
+    decoration: none;
+    color: blue;
+}
