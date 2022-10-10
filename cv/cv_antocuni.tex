@@ -14,7 +14,7 @@
 % personal data
 \firstname{Antonio}
 \familyname{Cuni}
-\title{Curriculum Vitae} 
+\title{Curriculum Vitae}
 \email{info@antocuni.eu}
 \extrainfo{http://antocuni.eu}
 \photo[64pt]{antocuni} % '64pt' is the height the picture must be resized to
@@ -26,7 +26,7 @@
 % }
 
 \quote{
-  Last updated: May 28, 2019
+  Last updated: Jul 4, 2021
 }
 
 %\nopagenumbers{} % uncomment to suppress automatic page numbering for CVs longer than one page
@@ -52,8 +52,11 @@
   readable code. Being a developer, I like to write tools targeted to myself
   and to the others developers, to make our life easier.}
 
-\cvitem{Technologies}{I am a primary a Python expert, but I have a strong
-  experience also with other technologies, including (but not limited to)
+\cvitem{Technologies}{I am a primary a Python expert. Thanks to my work on
+  PyPy I have a lot of experience in the field of language implementations:
+  Virtual Machines, interpreters, AOT and JIT JIT compilers, etc.\newline
+  I also have
+  a strong experience with other technologies, including (but not limited to)
   Linux, C, C++, SQL and database design, Web development in general, Java,
   .NET and C\#, computer networking and security.  Moreover, since programming
   and computers in general are still a pleasant hobby I like to learn about
@@ -66,9 +69,10 @@
   PyPy since 2006, including the development of the CLI/.NET and JVM backends,
   the CLI JIT backend, the PyPy JIT compiler generator, the PyPy Python
   interpreter and the testing infrastructure.  Currently, I am interested in
-  optimizing the \emph{cpyext} module, with the final goal of making the whole
-  Python scientific ecosystem very fast on PyPy.  Other than PyPy, I started
-  and have contributed to several FLOSS projects, as detailed below.}
+  improving the Python scientific ecosystem, and I founded/launched the HPy
+  project (see \emph{FLOSS Activity} for more details).  Other than PyPy and
+  HPy, I started and have contributed to several FLOSS projects, as detailed
+  below.}
 
 \cvitem{Methodologies}{I am addicted to TDD, and I don't even consider jobs or
   positions for which tests are not important.  I care \emph{a lot} about
@@ -113,8 +117,17 @@ compiler generator for dynamic languages.}}
 \cvitem{}{}
 
 \section{Employment History}
-\cventry{2012 -- now}{Consultant}{Gambit Research}{}{} {My primary task in
-  Gambit is to take their existing system and make it fast(er).  I cured the
+\cventry{2020 -- now}{Developer}{HPy}{}{} {Thanks to a sponsorship, I have the
+  possibility of working on HPy part-time. See below for a more in-depth
+  description of HPy.}
+
+\cventry{2020 -- now}{Developer}{Quansight}{}{} {My job at Quansight is to
+  contribute to the development of PyTorch, a deep learning framework. I
+  contributed to several different areas of PyTorch internals, including the
+  C++ core, the Python testing framework and the debugging facilities.}
+
+\cventry{2012 -- 2020}{Consultant}{Gambit Research}{}{} {My primary task in
+  Gambit was to take their existing system and make it fast(er).  I cured the
   switch from CPython to PyPy: after optimizing the code specifically for
   PyPy, I got speedups in the order of 10-20x.  To speed up the time spent in
   inter-process communication, I developed \emph{capnpy}, which is a
@@ -166,6 +179,13 @@ particular for the development of the Just In Time (JIT) Compiler generator.}
 \cvitem{PyPy ecosystem}{I also contributes to many projects which are strongly
   related to PyPy and/or have been started by the PyPy team. The two most
   notable ones are \texttt{CFFI} and \texttt{vmprof}, which was started by me.}
+
+\cvitem{HPy}{The final goal of HPy is to improve the performance of the
+  scientific stack on alternative implementations such as PyPy, and make it
+  possible to experiment with deep CPython refactoring which are currently not
+  possible because the C-API is too tied to the internals.  I am one of the
+  founders of the project and the \emph{de facto} leading developer, as of
+  2021.}
 
 \subsection{Projects started/owned by me}
 \cvitem{pdb++}{drop-in replacement and an extension of the standard
@@ -264,4 +284,3 @@ particular for the development of the Just In Time (JIT) Compiler generator.}
 
 
 \end{document}
-
