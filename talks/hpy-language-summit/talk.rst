@@ -348,6 +348,6 @@ Next steps
 
   - Official PSF/CPython endorsement?
 
-* Hypotetical sci-fi future :)
+* Hypothetical sci-fi future :)
 
   - CPython switches to HPy internally
