@@ -7,8 +7,12 @@
 	<title>PyScript slides</title>
     <link rel="stylesheet" href="slides.css">
 
-    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
-    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+    <link rel="stylesheet" href="https://pyscript.net/releases/2022.09.1/pyscript.css" />
+    <script defer src="https://pyscript.net/releases/2022.09.1/pyscript.js"></script>
+
+    <!-- <link rel="stylesheet" href="http://localhost:8080/pyscript.css" /> -->
+    <!-- <script defer src="http://localhost:8080/pyscript.js"></script> -->
+
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.6.0/build/styles/default.min.css">
     <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.6.0/build/highlight.min.js"></script>
@@ -63,8 +67,8 @@
     </py-script>
 
     <div id="slide1" class="slide">
-      <h1>PyBerlin 35</h1>
-      <h3>🍁🍁 Autumn event 🍁🍁</h3>
+      <h1>PyBerlin 36</h1>
+      <h3>🍁🍁 Special Autumn event 🍁🍁</h3>
       <br>
 
       <div class="big">PyScript</div>
@@ -109,7 +113,7 @@
         <li><b>WebAssembly</b>: portable "CPU" which runs everywhere (at nearly native speed!)</li>
         <li><b>Emscripten</b>: take legacy C/C++ code and compile it to WASM</li>
         <li><b>Pyodide</b>: compiles CPython to WASM + Python/JS bridge</li>
-        <li><b>Pyodide</b> again: many thanks to the Pyodide team!</li>
+        <li><i>MicroPython coming soon...</i></li>
       </ul>
     </div>
 
@@ -119,8 +123,8 @@
 
       <pre><code class="language-html">
   &lt;head&gt;
-    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://pyscript.net/latest/pyscript.css&quot; /&gt;
-    &lt;script defer src=&quot;https://pyscript.net/latest/pyscript.js&quot;&gt;&lt;/script&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://pyscript.net/releases/2022.09.1/pyscript.css&quot; /&gt;
+    &lt;script defer src=&quot;https://pyscript.net/releases/2022.09.1/pyscript.js&quot;&gt;&lt;/script&gt;
   &lt;/head&gt;
 
   &lt;body&gt;
@@ -237,8 +241,9 @@ fig1
       <ul>
         <li>Supported by Anaconda but OSS for <b>real</b></li>
         <li>Only few months old</li>
-        <li>Still considered alpha, expect your code to break (sorry)</li>
+        <li>Under heavy development, expect your code to break (sorry)</li>
         <li>(but you can just pin to a specific version and it will run forever)</li>
+        <li>We will release 2022.11.1 in a couple of days</li>
         <li>Many design decisions to take and to solve</li>
         <li>JS and Python are two different beasts</li>
         <li>Startup is too slow</li>
@@ -248,13 +253,6 @@ fig1
 
     <div id="slide12" class="slide">
       <h1>Q & A</h1>
-      Upcoming Events:
-      <ul>
-        <li>PyScript community call: 18th October, 18 CEST: <a href="https://github.com/pyscript/pyscript/issues/836">https://github.com/pyscript/pyscript/issues/836</a></li>
-        <li>PyCon DE Training day: 21st October: <a href="https://2023.pycon.de/blog/training-day-october-22/">https://2023.pycon.de/blog/training-day-october-22/</a></li>
-        <li>PyBerlin workshop -- stay tuned</li>
-      </ul>
-
       Links:
       <ul>
         <li><a href="https://pyscript.net">https://pyscript.net</a></li>
