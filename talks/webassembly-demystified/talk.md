@@ -1,3 +1,6 @@
+<link rel="stylesheet" href="https://pyscript.net/releases/2023.03.1/pyscript.css" />
+
+
 <style>
   .reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5 {
     text-transform: none;
@@ -10,7 +13,6 @@
   .main-size {
     font-size: var(--r-main-font-size);
   }
-
 </style>
 
 ## The CPU in your browser:
@@ -183,6 +185,20 @@ async function computeFactorial() {
 
 <button onClick="computeFactorial();">Compute</button>
 
+---
+
+### Running WASM from Python
+
+```python
+from wasmtime import Store, Module, Instance
+
+store = Store()
+module = Module.from_file(store.engine, 'factorial.wasm')
+instance = Instance(store, module, [])
+factorial = instance.exports(store)['factorial']
+
+print("factorial(5) =",  factorial(store, 5))
+```
 
 ---
 
@@ -273,24 +289,38 @@ async function computeFactorial() {
 
 <img style="max-width: 70%" src="img/wasi.png" />
 
+---
 
+## Upcoming features
 
+- Exception handling
 
+- Gargabe collection
 
-<!--
--- introduction to WebAssembly
--- comparison between WASM and other platforms
--- WASM in the browser vs on the server
--- WASI vs emscripten
--- Python on WASM
--- Low level details: memory, imports, exports
--- Practical example of compiling/using a WASM module
--- Advanced techniques: dynamic linking
--- Advanced techniques: JIT compilation
--- Upcoming WASM features, and why they are important:
--    * Component model
--    * GC integration
--    * Stack switching
--- WASM as a standard platform for multi language interoperability
--- What are the challenges and risks for the Python community?
--->
+- SIMD instructions
+
+- Threads and atomics
+
+- Component Model
+
+- ...
+
+---
+
+## WASM and Python
+
+- Python compiled to WASM
+
+- Pyodide: Python + scientific libs + JS interop
+
+- MicroPython
+
+- PyScript
+
+- https://pyscript.com
+
+---
+
+## PyScript
+
+<py-repl></py-repl>

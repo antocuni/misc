@@ -1,3 +1,4 @@
 {
-    "scripts": "src/run_factorial_browser.js"
+    "scripts": "src/run_factorial_browser.js,https://pyscript.net/releases/2023.03.1/pyscript.js",
+    "css": "https://pyscript.net/releases/2023.03.1/pyscript.css"
 }
