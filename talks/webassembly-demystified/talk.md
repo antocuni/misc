@@ -318,9 +318,3 @@ print("factorial(5) =",  factorial(store, 5))
 - PyScript
 
 - https://pyscript.com
-
----
-
-## PyScript
-
-<py-repl></py-repl>
