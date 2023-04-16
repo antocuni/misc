@@ -58,11 +58,7 @@ PyCon DE 2023
 
 - WASM runtimes:
 
-  * Browsers
-
-  * node.js
-
-  * wasmtime, wasmer, ...
+  * Browsers, `node.js`, `wasmtime`, `wasmer`, ...
 
 - The most ubiquitous VM ever
 
@@ -87,23 +83,81 @@ PyCon DE 2023
 
 ---
 
-<img src="img//two-hard-things.jpg" />
+<img src="img/two-hard-things.jpg" />
 
 ---
 
-Hello World
------------
+## Hello WebAssembly
+
+```c
+int factorial(int n) {
+    int result = 1;
+
+    for(int i=1; i<n+1; i++) {
+        result *= i;
+    }
+
+    return result;
+}
+```
+
+
+---
+
+```webassembly [1-4,14-25]
+(func $factorial (type $t1) (param $p0 i32) (result i32)
+  (local $l1 i32) (local $l2 i32)
+  (local.set $l1
+    (i32.const 1))
+  (if $I0
+    (i32.gt_s
+      (local.get $p0)
+      (i32.const 0))
+    (then
+      (local.set $l2
+        (i32.const 0))
+      (local.set $l1
+        (i32.const 1))
+      (loop $L1
+        (local.set $l1
+          (i32.mul
+            (local.tee $l2
+              (i32.add
+                (local.get $l2)
+                (i32.const 1)))
+            (local.get $l1)))
+        (br_if $L1
+          (i32.ne
+            (local.get $p0)
+            (local.get $l2))))))
+  (local.get $l1))
+```
+
+---
+
+
+### WebAssembly Text Format
+
+<img style="max-width: 70%" class="fragment" src="img/wat.jpg" />
+
+---
+
+### Running WASM
+
+- We need a **Host**
+
+- Can be the browser, or other runtimes
+
 
 
 
 ---
 
+## What can you do with WASM?
 
-WebAssembly Text Format
------------------------
+<p class="fragment">Burn a lot of CPU</p>
 
-|pause|
+<p class="fragment">That's it</p>
 
-.. image:: img/wat.jpg
-   :scale: 15%
-   :align: center
+
+## Safe by default
