@@ -6,6 +6,11 @@
   .big {
     font-size: 2.5em;
   }
+
+  .main-size {
+    font-size: var(--r-main-font-size);
+  }
+
 </style>
 
 ## The CPU in your browser:
@@ -101,8 +106,30 @@ int factorial(int n) {
 }
 ```
 
+---
+
+
+```
+	clang \
+		--target=wasm32 \
+		-nostdlib \
+		-Wl,--export-all -Wl,--no-entry, -Wl,--allow-undefined \
+		-g \
+		-O1 \
+		-o factorial.wasm \
+		factorial.c
+```
 
 ---
+
+### WebAssembly Text Format
+
+<img style="max-width: 70%" class="fragment" src="img/wat.jpg" />
+
+
+---
+
+### WAT
 
 ```webassembly [1-4,14-25]
 (func $factorial (type $t1) (param $p0 i32) (result i32)
@@ -135,29 +162,135 @@ int factorial(int n) {
 
 ---
 
-
-### WebAssembly Text Format
-
-<img style="max-width: 70%" class="fragment" src="img/wat.jpg" />
-
----
-
 ### Running WASM
 
-- We need a **Host**
+```js
+var modPromise = WebAssembly.instantiateStreaming(
+  fetch("src/factorial.wasm"), {});
 
-- Can be the browser, or other runtimes
+async function computeFactorial() {
+  const wasmModule = await modPromise;
+  const { factorial } = wasmModule.instance.exports;
 
+  const elemIn = document.getElementById('factorial-input');
+  const elemOut = document.getElementById('factorial-result');
+  const n = parseInt(elemIn.value);
+  elemOut.innerText = factorial(n);
+}
+```
 
+<code>factorial(<input class="main-size" id="factorial-input" size=1></input>) = <span id="factorial-result"></span></code>
+
+<button onClick="computeFactorial();">Compute</button>
 
 
 ---
 
-## What can you do with WASM?
+### Things you can do with WASM
 
-<p class="fragment">Burn a lot of CPU</p>
+<ol>
+  <li class="fragment">Burn a lot of CPU</li>
+  <li class="fragment">That's it</li>
+</ol>
 
-<p class="fragment">That's it</p>
+---
+
+# Sandboxing
+
+- No file system
+
+- No network
+
+- No I/O
+
+- No system calls
+
+- no libc
+
+---
+
+<img style="max-width: 70%" src="img/wat2.jpg" />
+
+---
+
+# Imports
+
+- WASM modules can declare *imports*
+
+- Imports are provided **by the host**
+
+- The host has full control over it
+
+---
+
+# Example: files
+
+- `open()`, `read()`, `write()` are imports
+
+- Up to the host:
+
+  * expose the "real" filesystem
+
+  * expose only a part of it
+
+  * expose a completely virtual FS
+
+---
+
+# Emscripten
+
+- Fill the gap between POSIX and WASM
+
+- Compatibility layer for existing/legacy code
+
+- Lots of existing C libs available
+
+  * SDL, zlib, libpng, ...
+
+- Runtime system implemented (mostly) in JS
+
+  * ➜ works only in browsers and `node.js`
+
+---
+
+# WASI
+
+- "Standard library of imports"
+
+- Provided by the host
+
+- Can give access to the "real" system
+
+- Or a virtualized/containerized one
+
+- Or polyfilled in the browser
+
+- Similar problem space as emscripten
+
+---
+
+#### WASI
+
+<img style="max-width: 70%" src="img/wasi.png" />
 
 
-## Safe by default
+
+
+
+<!--
+-- introduction to WebAssembly
+-- comparison between WASM and other platforms
+-- WASM in the browser vs on the server
+-- WASI vs emscripten
+-- Python on WASM
+-- Low level details: memory, imports, exports
+-- Practical example of compiling/using a WASM module
+-- Advanced techniques: dynamic linking
+-- Advanced techniques: JIT compilation
+-- Upcoming WASM features, and why they are important:
+-    * Component model
+-    * GC integration
+-    * Stack switching
+-- WASM as a standard platform for multi language interoperability
+-- What are the challenges and risks for the Python community?
+-->

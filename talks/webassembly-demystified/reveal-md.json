@@ -1,0 +1,3 @@
+{
+    "scripts": "src/run_factorial_browser.js"
+}
