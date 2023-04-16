@@ -1,6 +1,6 @@
 \definecolor{rrblitbackground}{rgb}{0.0, 0.0, 0.0}
 
-\title[WASM]{WebAssembly Demystified}
+\title[WebAssembly Demystified]{The CPU in your browser: WebAssembly Demystified}
 \author[antocuni]
 {Antonio Cuni}
 
