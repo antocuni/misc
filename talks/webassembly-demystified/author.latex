@@ -1,9 +1,0 @@
-\definecolor{rrblitbackground}{rgb}{0.0, 0.0, 0.0}
-
-\title[WebAssembly Demystified]{The CPU in your browser: WebAssembly Demystified}
-\author[antocuni]
-{Antonio Cuni}
-
-\institute{PyCon DE 2023}
-\date{April 17 2023}
-\date{}
