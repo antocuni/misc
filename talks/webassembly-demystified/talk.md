@@ -249,6 +249,65 @@ print("factorial(5) =",  factorial(store, 5))
 
 ---
 
+# Practical example
+
+```c
+extern void print_str(const char *message);
+extern void print_int(int n);
+
+void counter(int n) {
+    print_str("Hello PyCon from WebAssembly!");
+    print_str("These are some numbers:");
+
+    for(int i=0; i<n; i++)
+        print_int(i);
+}
+```
+
+---
+
+# Practical example
+
+```js [1-6|9]
+function print_int(n) { console.log(n); }
+function print_str(ptr) { ... }
+
+const myImports = {
+    env: { print_int, print_str }
+};
+
+const wasmBuffer = fs.readFileSync('counter.wasm');
+WebAssembly.instantiate(wasmBuffer, myImports).then(wasmModule => {
+  globalWasmModule = wasmModule;
+  const { counter } = wasmModule.instance.exports;
+  counter(10);
+});
+```
+
+---
+
+# Practical example
+
+```js [1|2-3|5-12|14]
+function print_str(ptr) {
+    const mem = globalWasmModule.instance.exports.memory;
+    const HEAPU8 = new Uint8Array(mem.buffer);
+
+    let s = "";
+    while(1) {
+        const val = HEAPU8[ptr];
+        if (val == 0)
+            break;
+        s += String.fromCharCode(val);
+        ptr++;
+    }
+
+    console.log(s);
+}
+```
+
+---
+
 # Emscripten
 
 - Fill the gap between POSIX and WASM
