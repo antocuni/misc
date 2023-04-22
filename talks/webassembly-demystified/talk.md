@@ -327,9 +327,23 @@ print("factorial(5) =",  factorial(store, 5))
   <li class="fragment"><strong>PyScript for Education.</strong><br/>
   Blake Rayfield (time machine)</li>
   <li class="fragment"><strong>PyScript and the magic of Python in the browser.</strong><br/>
-  Fabio Pliger (Sat, 1:30pm)</li>
+  Fabio Pliger (Sat, 1:45pm)</li>
   <li class="fragment"><strong>Anaconda booth.</strong> (PyScript
   info, demos &amp; <u>swag</u>!)</li>
   <li class="fragment"><strong>An open space.</strong> (Sunday - see the board)</li>
   <li class="fragment"><strong>Sprint with us!</strong> (Monday to Thursday)</li>
 </ul>
+
+---
+
+## That's all
+
+<div style="font-size: 0.5em">
+
+- https://github.com/antocuni/misc/tree/master/talks/webassembly-demystified
+
+- https://4897a01d-e56f-47fa-814f-70c7c1e11730.pyscriptapps.com/d16fb968-b11e-4eeb-a59c-462d20e187de/latest/
+
+- https://t.ly/o9smY
+
+</div>
