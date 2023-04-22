@@ -235,21 +235,7 @@ print("factorial(5) =",  factorial(store, 5))
 
 ---
 
-# Example: files
-
-- `open()`, `read()`, `write()` are imports
-
-- Up to the host:
-
-  * expose the "real" filesystem
-
-  * expose only a part of it
-
-  * expose a completely virtual FS
-
----
-
-# Practical example
+## `counter.c`
 
 ```c
 extern void print_str(const char *message);
@@ -265,8 +251,23 @@ void counter(int n) {
 ```
 
 ---
+## `counter.wat`
 
-# Practical example
+```webassembly [4-5,7]
+(module
+  (type $t0 (func (param i32)))
+  (type $t1 (func))
+  (import "env" "print_str" (func $env.print_str (type $t0)))
+  (import "env" "print_int" (func $env.print_int (type $t0)))
+  ...
+  (func $counter (type $t0) (param $p0 i32)
+    ...)
+  ...)
+```
+
+---
+
+## `run_counter_node.js`
 
 ```js [1-6|9]
 function print_int(n) { console.log(n); }
@@ -286,7 +287,7 @@ WebAssembly.instantiate(wasmBuffer, myImports).then(wasmModule => {
 
 ---
 
-# Practical example
+## `run_counter_node.js`
 
 ```js [1|2-3|5-12|14]
 function print_str(ptr) {
@@ -305,6 +306,53 @@ function print_str(ptr) {
     console.log(s);
 }
 ```
+
+---
+
+## `run_counter.py`
+
+```python [9-18]
+from wasmtime import Store, Module, Instance, Func, FuncType, ValType
+
+store = Store()
+module = Module.from_file(store.engine, 'counter.wasm')
+
+def print_num(n):
+    print(n)
+
+def print_str(ptr):
+    memory = instance.exports(store).get("memory")
+    s = ""
+    while True:
+        val = memory.read(store, ptr, ptr+1)[0]
+        if val == 0:
+            break
+        s += chr(val)
+        ptr += 1
+    print(s)
+
+print_num_func = Func(store, FuncType([ValType.i32()], []), print_num)
+print_str_func = Func(store, FuncType([ValType.i32()], []), print_str)
+
+instance = Instance(store, module, [print_str_func, print_num_func])
+counter = instance.exports(store)['counter']
+
+counter(store, 10)
+```
+
+---
+
+# Import example: files
+
+- `open()`, `read()`, `write()` are imports
+
+- Up to the host:
+
+  * expose the "real" filesystem
+
+  * expose only a part of it
+
+  * expose a completely virtual FS
 
 ---
 
@@ -381,16 +429,16 @@ function print_str(ptr) {
 ## More at PyCon
 
 <ul>
-  <li class="fragment"><strong>Build Yourself a PyScript</strong><br/>
+  <li><strong>Build Yourself a PyScript</strong><br/>
   Nicholas H.Tollervey, Paul Everitt (time machine)</li>
-  <li class="fragment"><strong>PyScript for Education.</strong><br/>
+  <li><strong>PyScript for Education.</strong><br/>
   Blake Rayfield (time machine)</li>
-  <li class="fragment"><strong>PyScript and the magic of Python in the browser.</strong><br/>
+  <li class="fragment highlight-blue"><strong>PyScript and the magic of Python in the browser.</strong><br/>
   Fabio Pliger (Sat, 1:45pm)</li>
-  <li class="fragment"><strong>Anaconda booth.</strong> (PyScript
+  <li><strong>Anaconda booth.</strong> (PyScript
   info, demos &amp; <u>swag</u>!)</li>
-  <li class="fragment"><strong>An open space.</strong> (Sunday - see the board)</li>
-  <li class="fragment"><strong>Sprint with us!</strong> (Monday to Thursday)</li>
+  <li><strong>An open space.</strong> (Sunday - see the board)</li>
+  <li><strong>Sprint with us!</strong> (Monday to Thursday)</li>
 </ul>
 
 ---

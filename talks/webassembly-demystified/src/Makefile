@@ -17,8 +17,3 @@ counter.wasm: counter.c
 		-O1 \
 		-o counter.wasm \
 		counter.c
-
-
-.PHONY: wasm2wat
-wasm2wat: factorial.wasm
-	wasm2wat --generate-names -f factorial.wasm | pygmentize -l wast -P style=rrt

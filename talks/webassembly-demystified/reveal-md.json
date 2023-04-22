@@ -1,3 +1,4 @@
 {
+    "title": "WebAssembly Demystified",
     "scripts": "src/run_factorial_browser.js"
 }
